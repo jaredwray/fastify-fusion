@@ -7,9 +7,9 @@ export type StaticPath = {
 	path: string;
 };
 
-export type StaticPathOptions = boolean | StaticPath[];
+export type StaticPathOptions = StaticPath[];
 
-export async function registerStatic(fastify: FastifyInstance, options: StaticPathOptions): Promise<void> {
+export async function registerStatic(fastify: FastifyInstance, options?: StaticPathOptions): Promise<void> {
 	if (Array.isArray(options)) {
 		for (const staticPath of options) {
 			let rootPath = staticPath.dir;
@@ -23,13 +23,15 @@ export async function registerStatic(fastify: FastifyInstance, options: StaticPa
 				prefix: staticPath.path,
 				decorateReply: false,
 			});
+			fastify.log.info(`Static path registered: ${staticPath.path} -> ${rootPath}`);
 		}
-	} else if (options) {
+	} else {
 		// Register the default 'public' directory if they are not specified
 		await fastify.register(fastifyStatic, {
 			root: path.resolve('./public'),
 			prefix: '/',
 			decorateReply: false,
 		});
+		fastify.log.info(`Static path registered: / -> ${path.resolve('./public')}`);
 	}
 }
