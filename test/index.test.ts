@@ -18,4 +18,32 @@ describe('Fuse', async () => {
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
 	});
+	test('should be able to add in the log options', async () => {
+		const app = fastify();
+		const options: FuseOptions = {
+			static: true,
+			log: {
+				level: 'info',
+			},
+		};
+		await fuse(app, options);
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
+	});
+	test('should be able to add in the static options', async () => {
+		const app = fastify();
+		const options: FuseOptions = {
+			static: [
+				{
+					dir: 'test/fixtures',
+					path: '/static',
+				},
+			],
+		};
+		await fuse(app, options);
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+	});
 });
