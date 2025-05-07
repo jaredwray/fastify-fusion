@@ -8,7 +8,15 @@ export type FuseOptions = {
 	log?: boolean | LoggerOptions;
 };
 
-export async function fuse(fastify: FastifyInstance, options: FuseOptions): Promise<void> {
+export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Promise<void> {
+	// If no options are provided, use the default options
+	if (options === undefined) {
+		options = {
+			static: true,
+			log: true,
+		};
+	}
+
 	// Register the logger
 	if (options.log !== undefined && typeof options.log !== 'boolean') {
 		await registerLog(fastify, options.log);
