@@ -1,6 +1,7 @@
+import path from 'node:path';
 import {type FastifyInstance} from 'fastify';
 import {type StaticOptions, registerStatic} from './static.js';
-import {registerLog, type LoggerOptions} from './log.js';
+import {registerLog, logConfig, type LoggerOptions} from './log.js';
 
 export type FuseOptions = {
 	static?: boolean | StaticOptions;
@@ -13,7 +14,7 @@ export async function fuse(fastify: FastifyInstance, options: FuseOptions): Prom
 		await registerLog(fastify, options.log);
 	} else if (options.log !== false) {
 		// Register the default logger if they are not specified
-		await registerLog(fastify);
+		await registerLog(fastify, logConfig);
 	}
 
 	// Register the static paths
@@ -21,6 +22,12 @@ export async function fuse(fastify: FastifyInstance, options: FuseOptions): Prom
 		await registerStatic(fastify, options.static);
 	} else if (options.static !== false) {
 		// Register the default 'public' directory if they are not specified
-		await registerStatic(fastify);
+		const defaultStaticPath = [
+			{
+				dir: path.resolve('./public'),
+				path: '/',
+			},
+		];
+		await registerStatic(fastify, defaultStaticPath);
 	}
 }
