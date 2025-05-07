@@ -1,6 +1,6 @@
 import {describe, test, expect} from 'vitest';
-import fastify from 'fastify';
-import {fuse, type FuseOptions} from '../src/index.js';
+import Fastify from 'fastify';
+import {fuse, fastify, type FuseOptions} from '../src/index.js';
 
 describe('Fuse', async () => {
 	test('should export all modules', async () => {
@@ -8,7 +8,8 @@ describe('Fuse', async () => {
 		expect(fuse).toBeTypeOf('function');
 	});
 	test('should execute fuse', async () => {
-		const app = fastify();
+		// eslint-disable-next-line new-cap
+		const app = Fastify();
 		const options: FuseOptions = {
 			static: true,
 		};
@@ -19,7 +20,8 @@ describe('Fuse', async () => {
 		expect(app.server).toBeTypeOf('object');
 	});
 	test('should be able to add in the log options', async () => {
-		const app = fastify();
+		// eslint-disable-next-line new-cap
+		const app = Fastify();
 		const options: FuseOptions = {
 			static: true,
 			log: {
@@ -33,7 +35,8 @@ describe('Fuse', async () => {
 		expect(app.server).toBeTypeOf('object');
 	});
 	test('should be able to add in the static options', async () => {
-		const app = fastify();
+		// eslint-disable-next-line new-cap
+		const app = Fastify();
 		const options: FuseOptions = {
 			static: [
 				{
@@ -45,5 +48,12 @@ describe('Fuse', async () => {
 		await fuse(app, options);
 		expect(app).toBeDefined();
 		expect(app).toBeTypeOf('object');
+	});
+	test('should be able to use fastify function', async () => {
+		const app = await fastify();
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
 	});
 });
