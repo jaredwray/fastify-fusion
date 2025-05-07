@@ -2,10 +2,12 @@ import path from 'node:path';
 import {type FastifyInstance} from 'fastify';
 import {type StaticOptions, registerStatic} from './static.js';
 import {registerLog, logConfig, type LoggerOptions} from './log.js';
+import {registerSwagger, type SwaggerOptions, defaultSwaggerOptions} from './swagger.js';
 
 export type FuseOptions = {
 	static?: boolean | StaticOptions;
 	log?: boolean | LoggerOptions;
+	swagger?: boolean | SwaggerOptions;
 };
 
 export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Promise<void> {
@@ -37,5 +39,13 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 			},
 		];
 		await registerStatic(fastify, defaultStaticPath);
+	}
+
+	// Register the swagger documentation
+	if (options.swagger !== undefined && typeof options.swagger !== 'boolean') {
+		await registerSwagger(fastify, options.swagger);
+	} else if (options.swagger !== false) {
+		// Register the default swagger documentation if they are not specified
+		await registerSwagger(fastify, defaultSwaggerOptions);
 	}
 }
