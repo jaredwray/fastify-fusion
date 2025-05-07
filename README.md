@@ -28,7 +28,7 @@ const app = Fastify();
 
 // Fuse the app. It will use the default options if none are provided. If you want to use your own options, pass them in as the second argument.
 
-fuse(app);
+await fuse(app);
 ```
 
 Want to just get your app up and running? You can use the `fastify()` function to create a new Fastify app with the default options.
@@ -36,7 +36,7 @@ Want to just get your app up and running? You can use the `fastify()` function t
 ```typescript
 import { fastify } from 'fastify-fusion';
 
-const app = fastify();
+const app = await fastify();
 ```
 
 You can also pass in the `FuseOptions` to customize your fastify instance.
