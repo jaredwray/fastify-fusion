@@ -40,3 +40,45 @@ const app = await fastify();
 ```
 
 You can also pass in the `FuseOptions` to customize your fastify instance.
+
+# Static Paths
+
+By default, the static path is set to `./public`. You can change this by passing in the `staticPath` option in the `FuseOptions`.
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+import path from 'path';
+
+const app = Fastify();
+const options: FuseOptions = {
+  staticPath: [
+	{
+		dir: path.resolve('./static'),
+		path: '/static'
+	}
+  ]
+};
+await fuse(app, options);
+```
+
+When you do this you override the default static path. You can also add multiple static paths by passing in an array of objects. Each object should have a `dir` and `path` property.
+
+# Logging
+
+By default, the logger is set to `pino` with `pino-pretty` enabled. You can change this by passing in the `logger` option in the `FuseOptions`.
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+
+const app = Fastify();
+const options: FuseOptions = {
+  logger: {
+	level: 'info',
+	prettyPrint: true,
+  },
+};
+
+await fuse(app, options);
+```
