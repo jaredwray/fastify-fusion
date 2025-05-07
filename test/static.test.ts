@@ -1,7 +1,7 @@
 import path from 'node:path';
 import {describe, test, expect} from 'vitest';
 import fastify from 'fastify';
-import {type StaticPathOptions, registerStatic} from '../src/static.js';
+import {type StaticOptions, registerStatic} from '../src/static.js';
 
 describe('Static', async () => {
 	test('should export all modules', async () => {
@@ -10,7 +10,7 @@ describe('Static', async () => {
 	});
 	test('should register static paths', async () => {
 		const app = fastify();
-		const options: StaticPathOptions = [
+		const options: StaticOptions = [
 			{
 				dir: 'test/fixtures',
 				path: '/static',
