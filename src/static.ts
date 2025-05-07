@@ -7,9 +7,9 @@ export type StaticPath = {
 	path: string;
 };
 
-export type StaticPathOptions = StaticPath[];
+export type StaticOptions = StaticPath[];
 
-export async function registerStatic(fastify: FastifyInstance, options?: StaticPathOptions): Promise<void> {
+export async function registerStatic(fastify: FastifyInstance, options?: StaticOptions): Promise<void> {
 	if (Array.isArray(options)) {
 		for (const staticPath of options) {
 			let rootPath = staticPath.dir;

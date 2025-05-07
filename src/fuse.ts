@@ -1,9 +1,9 @@
 import {type FastifyInstance} from 'fastify';
-import {type StaticPathOptions, registerStatic} from './static.js';
+import {type StaticOptions, registerStatic} from './static.js';
 import {registerLog, type LoggerOptions} from './log.js';
 
 export type FuseOptions = {
-	static?: boolean | StaticPathOptions;
+	static?: boolean | StaticOptions;
 	log?: boolean | LoggerOptions;
 };
 
