@@ -9,29 +9,19 @@ export type StaticPath = {
 
 export type StaticOptions = StaticPath[];
 
-export async function registerStatic(fastify: FastifyInstance, options?: StaticOptions): Promise<void> {
-	if (Array.isArray(options)) {
-		for (const staticPath of options) {
-			let rootPath = staticPath.dir;
-			if (!path.isAbsolute(rootPath)) {
-				rootPath = path.resolve(rootPath);
-			}
-
-			// eslint-disable-next-line no-await-in-loop
-			await fastify.register(fastifyStatic, {
-				root: rootPath,
-				prefix: staticPath.path,
-				decorateReply: false,
-			});
-			fastify.log.info(`Static path registered: ${staticPath.path} -> ${rootPath}`);
+export async function registerStatic(fastify: FastifyInstance, options: StaticOptions): Promise<void> {
+	for (const staticPath of options) {
+		let rootPath = staticPath.dir;
+		if (!path.isAbsolute(rootPath)) {
+			rootPath = path.resolve(rootPath);
 		}
-	} else {
-		// Register the default 'public' directory if they are not specified
+
+		// eslint-disable-next-line no-await-in-loop
 		await fastify.register(fastifyStatic, {
-			root: path.resolve('./public'),
-			prefix: '/',
+			root: rootPath,
+			prefix: staticPath.path,
 			decorateReply: false,
 		});
-		fastify.log.info(`Static path registered: / -> ${path.resolve('./public')}`);
+		fastify.log.info(`Static path registered: ${staticPath.path} -> ${rootPath}`);
 	}
 }

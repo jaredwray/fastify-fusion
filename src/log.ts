@@ -13,12 +13,8 @@ export const logConfig = {
 	},
 };
 
-export async function registerLog(fastify: FastifyInstance, options?: LoggerOptions): Promise<void> {
-	if (options) {
-		Object.assign(logConfig, options);
-	}
-
-	fastify.log = pino(logConfig);
+export async function registerLog(fastify: FastifyInstance, options: LoggerOptions): Promise<void> {
+	fastify.log = pino(options);
 	fastify.log.info('logging registered');
 }
 
