@@ -24,7 +24,7 @@ export async function fuse(fastify: FastifyInstance, options: FuseOptions): Prom
 		// Register the default 'public' directory if they are not specified
 		const defaultStaticPath = [
 			{
-				dir: 'public',
+				dir: path.resolve('./public'),
 				path: '/',
 			},
 		];
