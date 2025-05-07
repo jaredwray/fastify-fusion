@@ -7,7 +7,7 @@
   "scripts": {
     "test": "xo --fix && vitest run --coverage",
     "test:ci": "xo && vitest run --coverage",
-    "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
+    "build": "rimraf ./dist && tsup src/index.ts --format esm --dts --clean",
     "clean": "rimraf ./dist"
   },
   "keywords": [],
