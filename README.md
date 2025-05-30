@@ -12,7 +12,6 @@ Fastify API framework with best practices fused together to make it easy to buil
 # Features
 - **Fast**: Built on top of [Fastify](https://www.fastify.io/), the fastest web framework for Node.js.
 - **TypeScript**: Written in TypeScript, with type definitions included.
-- **Batteries included**: Preconfigured and easy to use with [Fastify](https://www.fastify.io/) plugins.
 - **Logging** - Pino Configured using Pino Pretty to make it easy to read.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
 - **Regularly updated**: Updated regularly to keep up with the latest Fastify and TypeScript features.
