@@ -1,6 +1,12 @@
 [![fastify-fusion](./site/logo.svg)](https://fastify-fusion.org)
 
 # fastify-fusion
+[![codecov](https://codecov.io/gh/jaredwray/fastify-fusion/graph/badge.svg?token=ieUorXA15v)](https://codecov.io/gh/jaredwray/fastify-fusion)
+[![tests](https://github.com/jaredwray/fastify-fusion/actions/workflows/tests.yaml/badge.svg)](https://github.com/jaredwray/fastify-fusion/actions/workflows/tests.yaml)
+[![npm](https://img.shields.io/npm/v/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
+[![npm](https://img.shields.io/npm/dm/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
+[![license](https://img.shields.io/github/license/jaredwray/cacheable)](https://github.com/jaredwray/fastify-fusion/blob/main/LICENSE)
+
 Fastify API framework with best practices fused together to make it easy to build and maintain your API.
 
 # Features
