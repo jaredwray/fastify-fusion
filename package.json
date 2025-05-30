@@ -15,7 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "@swc/core": "^1.11.29",
-    "@types/node": "^22.15.28",
+    "@types/node": "^22.15.29",
     "@vitest/coverage-v8": "^3.1.4",
     "rimraf": "^6.0.1",
     "tsd": "^0.32.0",
@@ -23,7 +23,7 @@
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "vitest": "^3.1.4",
-    "xo": "^1.0.3"
+    "xo": "^1.0.4"
   },
   "peerDependencies": {
     "fastify": "^5.3.2"
