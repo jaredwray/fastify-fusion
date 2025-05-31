@@ -1,6 +1,6 @@
 {
   "name": "fastify-fusion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "",
   "main": "dist/index.js",
@@ -10,7 +10,20 @@
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
     "clean": "rimraf ./dist"
   },
-  "keywords": [],
+  "keywords": [
+    "fastify",
+    "fusion",
+    "framework",
+    "web",
+    "server",
+    "static",
+    "helmet",
+    "pino",
+    "logging",
+    "typescript",
+    "api",
+    "rest"
+  ],
   "author": "Jared Wray <me@jaredwray.com>",
   "license": "MIT",
   "devDependencies": {
@@ -36,6 +49,7 @@
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "site/logo.png"
   ]
 }
