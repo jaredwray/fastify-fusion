@@ -7,6 +7,7 @@ describe('Fuse', async () => {
 		expect(fuse).toBeDefined();
 		expect(fuse).toBeTypeOf('function');
 	});
+
 	test('should execute fuse', async () => {
 		// eslint-disable-next-line new-cap
 		const app = Fastify();
@@ -19,6 +20,7 @@ describe('Fuse', async () => {
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
 	});
+
 	test('should be able to add in the log options', async () => {
 		// eslint-disable-next-line new-cap
 		const app = Fastify();
@@ -34,6 +36,7 @@ describe('Fuse', async () => {
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
 	});
+
 	test('should be able to add in the static options', async () => {
 		// eslint-disable-next-line new-cap
 		const app = Fastify();
@@ -49,8 +52,26 @@ describe('Fuse', async () => {
 		expect(app).toBeDefined();
 		expect(app).toBeTypeOf('object');
 	});
+
 	test('should be able to use fastify function', async () => {
 		const app = await fastify();
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
+	});
+
+	test('should be able to use the helmet options', async () => {
+		// eslint-disable-next-line new-cap
+		const app = Fastify();
+		const options: FuseOptions = {
+			static: true,
+			helmet: {
+				contentSecurityPolicy: false,
+				hidePoweredBy: true,
+			},
+		};
+		await fuse(app, options);
 		expect(app).toBeDefined();
 		expect(app).toBeTypeOf('object');
 		expect(app.server).toBeDefined();
