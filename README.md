@@ -1,4 +1,4 @@
-[![fastify-fusion](site/logo.svg)](https://fastify-fusion.org)
+![site/logo.svg](site/logo.svg)
 
 # fastify-fusion
 [![codecov](https://codecov.io/gh/jaredwray/fastify-fusion/graph/badge.svg?token=ieUorXA15v)](https://codecov.io/gh/jaredwray/fastify-fusion)
