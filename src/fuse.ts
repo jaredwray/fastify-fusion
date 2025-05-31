@@ -1,7 +1,7 @@
 import path from 'node:path';
 import {type FastifyInstance} from 'fastify';
 import {type StaticOptions, registerStatic} from './static.js';
-import {registerLog, logConfig, type LoggerOptions} from './log.js';
+import {registerLog, defaultLoggingOptions, type LoggerOptions} from './log.js';
 import {defaultFastifyHelmetOptions, type FastifyHelmetOptions, registerHelmet} from './helmet.js';
 
 export type FuseOptions = {
@@ -23,7 +23,7 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 		await registerLog(fastify, options.log);
 	} else if (options.log !== false) {
 		// Register the default logger if they are not specified
-		await registerLog(fastify, logConfig);
+		await registerLog(fastify, defaultLoggingOptions);
 	}
 
 	// Register the static paths

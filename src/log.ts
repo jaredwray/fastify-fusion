@@ -1,7 +1,7 @@
 import {type FastifyInstance} from 'fastify';
 import pino, {type LoggerOptions} from 'pino';
 
-export const logConfig = {
+export const defaultLoggingOptions = {
 	transport: {
 		target: 'pino-pretty',
 		options: {

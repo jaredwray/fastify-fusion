@@ -10,11 +10,22 @@
 Fastify API framework with best practices fused together to make it easy to build and maintain your API.
 
 # Features
-- **Fast**: Built on top of [Fastify](https://www.fastify.io/), the fastest web framework for Node.js.
-- **TypeScript**: Written in TypeScript, with type definitions included.
+- **Batteries Included** - All the best practices for building a Fastify API are included out of the box.
+- **CORS** - CORS enabled by default with sensible defaults using `fastify-cors`.
+- **Helmet** - Security headers set using `fastify-helmet`.
 - **Logging** - Pino Configured using Pino Pretty to make it easy to read.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
+- **TypeScript** - Fully typed with TypeScript, including all plugins and options.
 - **Regularly updated**: Updated regularly to keep up with the latest Fastify and TypeScript features.
+
+# Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Fuse an existing Fastify app](#fuse-an-existing-fastify-app)
+  - [Create a new Fastify app](#create-a-new-fastify-app)
+- [Fuse Options](#fuse-options)
+- [Features](#features)
+- [License](#license)
 
 # Installation
 ```bash
@@ -45,3 +56,109 @@ const app = await fastify();
 ```
 
 You can also pass in the `FuseOptions` to customize your fastify instance.
+
+# Fuse Options
+
+You can customize the behavior of `fastify-fusion` by passing in options to the `fuse` function or when creating a new Fastify app with `fastify()`.
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  cors: {
+    origin: '*', // Allow all origins
+  },
+  helmet: {
+    contentSecurityPolicy: false, // Disable CSP for simplicity
+  },
+  static: {
+    path: '/static/', // Serve static files from /public
+    dir: './static', // Path to the static files
+  },
+};
+await fuse(app, options);
+```
+
+Here is the `FuseOptions` interface with all the available options:
+
+```typescript
+export type FuseOptions = {
+	static?: boolean | StaticOptions;
+	log?: boolean | LoggerOptions;
+	helmet?: boolean | FastifyHelmetOptions;
+};
+```
+
+By default, all the options are set to `true`, which means that all of the default settings will be applied. You can learn about the default settings in each features's documentation below.
+
+# Static
+
+By default `fastify-fusion` serves static files from the `./public` directory. You can change this by passing in a `StaticOptions` object to the `fuse` function. The default configuration serves static files from the `/public` path. Here is an example of how to customize the static file serving:
+
+```typescript
+const defaultStaticPath = [
+    {
+        dir: path.resolve('./public'),
+        path: '/',
+    },
+];
+```
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  static: {
+    dir: './static/', // Serve static files from /static
+    path: '/static', // Path to the static files
+  },
+};
+await fuse(app, options);
+```
+
+# Logging
+
+By default, `fastify-fusion` uses Pino for logging and configures it with sensible defaults. You can customize the logging behavior by passing in a `LoggerOptions` object to the `fuse` function. The default logging configuration uses `pino-pretty` and here are the default options:
+
+```typescript
+export const defaultLoggingOptions = {
+	transport: {
+		target: 'pino-pretty',
+		options: {
+			colorize: true,
+			translateTime: true,
+			ignore: 'pid,hostname',
+			singleLine: true,
+		},
+	},
+};
+```
+
+Here is an example of how to customize the logging options:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  log: {
+    level: 'info', // Set the log level
+    prettyPrint: true, // Enable pretty print for development
+  },
+};
+await fuse(app, options);
+```
+
+# Helmet
+
+# CORS
+
+# How to Contribute
+
+If you want to contribute to this project, please read the [Contributing Guide](./CONTRIBUTING.md) for more information on how to get started.
+
+# Licensing and Copyright
+
+This project is licensed under the [MIT License](./LICENSE). Copyright (c) Jared Wray.
