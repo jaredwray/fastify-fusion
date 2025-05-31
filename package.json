@@ -1,6 +1,6 @@
 {
   "name": "fastify-fusion",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "",
   "main": "dist/index.js",
@@ -50,7 +50,8 @@
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "site/logo.svg"
   ],
   "logo": {
     "file": "site/logo.svg"
