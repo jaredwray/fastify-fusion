@@ -10,7 +10,20 @@
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
     "clean": "rimraf ./dist"
   },
-  "keywords": [],
+  "keywords": [
+    "fastify",
+    "fusion",
+    "framework",
+    "web",
+    "server",
+    "static",
+    "helmet",
+    "pino",
+    "logging",
+    "typescript",
+    "api",
+    "rest"
+  ],
   "author": "Jared Wray <me@jaredwray.com>",
   "license": "MIT",
   "devDependencies": {
