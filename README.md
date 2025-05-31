@@ -21,11 +21,12 @@ Fastify API framework with best practices fused together to make it easy to buil
 # Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Fuse an existing Fastify app](#fuse-an-existing-fastify-app)
-  - [Create a new Fastify app](#create-a-new-fastify-app)
 - [Fuse Options](#fuse-options)
-- [Features](#features)
-- [License](#license)
+- [Static Paths](#static-paths)
+- [Logging](#logging)
+- [Helmet](#helmet)
+- [How to Contribute](#how-to-contribute)
+- [Licensing and Copyright](#licensing-and-copyright)
 
 # Installation
 ```bash
@@ -92,7 +93,7 @@ export type FuseOptions = {
 
 By default, all the options are set to `true`, which means that all of the default settings will be applied. You can learn about the default settings in each features's documentation below.
 
-# Static
+# Static Paths
 
 By default `fastify-fusion` serves static files from the `./public` directory. You can change this by passing in a `StaticOptions` object to the `fuse` function. The default configuration serves static files from the `/public` path. Here is an example of how to customize the static file serving:
 
@@ -152,8 +153,64 @@ await fuse(app, options);
 ```
 
 # Helmet
+`fastify-fusion` uses `fastify-helmet` to set security headers by default. You can customize the behavior of `fastify-helmet` by passing in a `FastifyHelmetOptions` object to the `fuse` function. The default configuration sets the following headers:
 
-# CORS
+```typescript
+export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
+	// Turn off CSP (mostly for HTML) to avoid overhead
+	contentSecurityPolicy: false,
+
+	// Remove the X-Power-By header
+	hidePoweredBy: true,
+
+	// Prevent your API from being framed
+	frameguard: {action: 'deny'},
+
+	// Disable DNS prefetching
+	dnsPrefetchControl: {allow: false},
+
+	// Enable HSTS for one year on HTTPS endpoints
+	hsts: {
+		maxAge: 31_536_000, // 365 days in seconds
+		includeSubDomains: true,
+		preload: true,
+	},
+
+	// Block sniffing of MIME types
+	noSniff: true,
+
+	// Basic XSS protections
+	xssFilter: true,
+
+	// Don't send Referer at all
+	referrerPolicy: {policy: 'no-referrer'},
+
+	// Tighten cross-origin resource loading
+	crossOriginResourcePolicy: {policy: 'same-origin'},
+
+	// You generally don't need the embedder/policy on an API
+	crossOriginEmbedderPolicy: false,
+
+	// Leave CSP nonces off
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	enableCSPNonces: false,
+};
+```
+
+You can customize the security headers by passing in a `FastifyHelmetOptions` object to the `fuse` function. Here is an example of how to customize the helmet options:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  helmet: {
+    contentSecurityPolicy: false, // Disable CSP for simplicity
+    crossOriginEmbedderPolicy: false, // Disable COEP for simplicity
+  },
+};
+await fuse(app, options);
+```
 
 # How to Contribute
 
