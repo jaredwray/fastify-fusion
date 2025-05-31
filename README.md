@@ -7,11 +7,9 @@
 [![npm](https://img.shields.io/npm/dm/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
 [![license](https://img.shields.io/github/license/jaredwray/cacheable)](https://github.com/jaredwray/fastify-fusion/blob/main/LICENSE)
 
-Fastify API framework with best practices fused together to make it easy to build and maintain your API.
+Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.
 
 # Features
-- **Batteries Included** - All the best practices for building a Fastify API are included out of the box.
-- **CORS** - CORS enabled by default with sensible defaults using `fastify-cors`.
 - **Helmet** - Security headers set using `fastify-helmet`.
 - **Logging** - Pino Configured using Pino Pretty to make it easy to read.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
