@@ -56,6 +56,18 @@ const app = await fastify();
 
 You can also pass in the `FuseOptions` to customize your fastify instance.
 
+```typescript
+import { fastify, FuseOptions } from 'fastify-fusion';
+
+const fuseOptions: FuseOptions = {
+  static: true,
+  log: true,
+  helmet: false, // Disable helmet for simplicity
+};
+
+const app = await fastify(fuseOptions);
+```
+
 # Fuse Options
 
 You can customize the behavior of `fastify-fusion` by passing in options to the `fuse` function or when creating a new Fastify app with `fastify()`.
