@@ -103,6 +103,42 @@ export type FuseOptions = {
 
 By default, all the options are set to `true`, which means that all of the default settings will be applied. You can learn about the default settings in each features's documentation below.
 
+# Fastify Start
+
+You can start your Fastify app using the `start` function. This function will start the Fastify server and log the URL where the server is running. This will use the default configuration for the server, which includes a default port of `3000` and a host of `0.0.0.0` if `process.env.PORT` or `process.env.HOST` are not set. 
+
+```typescript
+import { fastify, start } from 'fastify-fusion';
+
+const app = await fastify();
+start(app);
+```
+
+You can customize the port and host by passing in a `StartOptions` object to the `start` function.
+
+```typescript
+import { fastify, start, type StartOptions } from 'fastify-fusion';
+
+const app = await fastify();
+const options: StartOptions = {
+  port: 3001, // Set the port to 3000
+  host: '127.0.0.1', // Set the host to 127.0.0.1
+};
+
+start(app, options);
+```
+
+If you want to also set the startup message when the server starts, you can pass in a `message` function to the `StartOptions`. This function will receive the host and port as arguments and should return a string that will be logged to the console.
+
+```typescript
+import { fastify, start, type StartOptions } from 'fastify-fusion';
+const app = await fastify();
+const options: StartOptions = {
+  message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
+};
+start(app, options);
+```
+
 # Static Paths
 
 By default `fastify-fusion` serves static files from the `./public` directory. You can change this by passing in a `StaticOptions` object to the `fuse` function. The default configuration serves static files from the `/public` path. Here is an example of how to customize the static file serving:
