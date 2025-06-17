@@ -79,6 +79,22 @@ describe('Fuse', async () => {
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
 	});
+
+	test('should be able to use the rate limit options', async () => {
+		// eslint-disable-next-line new-cap
+		const app = Fastify();
+		const options: FuseOptions = {
+			static: true,
+			rateLimit: {
+				max: 100,
+			},
+		};
+		await fuse(app, options);
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
+	});
 });
 
 describe('Fastify Start', async () => {

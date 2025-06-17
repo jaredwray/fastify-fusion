@@ -12,8 +12,9 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 # Features
 - **Fastify** - Easily create a Fastify app with sensible defaults via `fastify()` or `fuse()`.
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
-- **Helmet** - Security headers set using `fastify-helmet` with sensible defaults.
-- **Logging** - Pino Configured using Pino Pretty to make it easy to read.
+- **Helmet** - Security headers set using `@fastify/helmett` with sensible defaults.
+- **Logging** - Pino Configured using `pino-pretty` to make it easy to read.
+- **Rate Limiting** - Rate limiting using `@fastify/rate-limit` with sensible defaults.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
 - **Regularly updated**: Updated regularly to keep up with the latest Fastify and TypeScript features.
 
@@ -245,7 +246,7 @@ export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 };
 ```
 
-You can customize the security headers by passing in a `FastifyHelmetOptions` object to the `fuse` function. Here is an example of how to customize the helmet options:
+You can customize the security headers by passing in a `FastifyHelmetOptions` object to the `fuse` function. The default configuration sets the following:
 
 ```typescript
 import { fuse, FuseOptions } from 'fastify-fusion';
@@ -255,6 +256,36 @@ const options: FuseOptions = {
   helmet: {
     contentSecurityPolicy: false, // Disable CSP for simplicity
     crossOriginEmbedderPolicy: false, // Disable COEP for simplicity
+  },
+};
+await fuse(app, options);
+```
+
+# Rate Limiting
+
+`fastify-fusion` uses `@fastify/rate-limit` to limit the number of requests to your API. By default, it allows 100 requests per minute per IP address. You can customize the rate limiting behavior by passing in a `RateLimitOptions` object to the `fuse` function. Here is an example of how to customize the rate limiting options:
+
+```typescript
+export const defaultFastifyRateLimitOptions: FastifyRateLimitOptions = {
+	// Enable rate limiting
+	global: true,
+	// Limit to 100 requests per minute
+	max: 500,
+	// Time window for the rate limit
+	timeWindow: 60_000, // 1 minute in milliseconds
+	// allow list for local development and testing
+	allowList: ['127.0.0.1', '0.0.0.0'],
+};
+```
+You can customize the rate limiting options by passing in a `RateLimitOptions` object to the `fuse` function. Here is an example of how to customize the rate limiting options:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  rateLimit: {
+	max: 200, // Allow 200 requests per minute per IP address
   },
 };
 await fuse(app, options);
