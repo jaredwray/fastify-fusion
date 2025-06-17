@@ -10,16 +10,18 @@
 Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.
 
 # Features
-- **Helmet** - Security headers set using `fastify-helmet`.
+- **Fastify** - Easily create a Fastify app with sensible defaults via `fastify()` or `fuse()`.
+- **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
+- **Helmet** - Security headers set using `fastify-helmet` with sensible defaults.
 - **Logging** - Pino Configured using Pino Pretty to make it easy to read.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
-- **TypeScript** - Fully typed with TypeScript, including all plugins and options.
 - **Regularly updated**: Updated regularly to keep up with the latest Fastify and TypeScript features.
 
 # Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [Fuse Options](#fuse-options)
+- [Fastify Start](#fastify-start)
 - [Static Paths](#static-paths)
 - [Logging](#logging)
 - [Helmet](#helmet)
