@@ -1,6 +1,8 @@
 import {describe, test, expect} from 'vitest';
 import Fastify from 'fastify';
-import {fuse, fastify, type FuseOptions} from '../src/index.js';
+import {
+	fuse, fastify, start, type StartOptions, type FuseOptions,
+} from '../src/index.js';
 
 describe('Fuse', async () => {
 	test('should export all modules', async () => {
@@ -76,5 +78,65 @@ describe('Fuse', async () => {
 		expect(app).toBeTypeOf('object');
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
+	});
+});
+
+describe('Fastify Start', async () => {
+	test('should start the fastify server', async () => {
+		const app = await fastify();
+		expect(app).toBeDefined();
+		await start(app);
+		expect(app.server.listening).toBe(true);
+	});
+
+	test('should error on missing port via log', async () => {
+		const app = await fastify();
+		const options: StartOptions = {
+			port: undefined,
+			host: '0.0.0.0',
+			message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
+		};
+		options.port = undefined;
+		let errorMessage = '';
+		app.log.error = (error: unknown) => {
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			} else {
+				errorMessage = String(error);
+			}
+		};
+
+		expect(app).toBeDefined();
+		await start(app, options);
+		expect(app.server.listening).toBe(false);
+		expect(errorMessage).toBe('Port is not defined. Please set the PORT environment variable or provide a port in the options.');
+	});
+
+	test('should error on missing host via log', async () => {
+		const app = await fastify();
+		const options: StartOptions = {
+			port: 3000,
+			host: undefined,
+			message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
+		};
+		options.host = undefined;
+		let errorMessage = '';
+		app.log.error = (error: unknown) => {
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			} else if (typeof error === 'string') {
+				errorMessage = error;
+			} else {
+				errorMessage = String(error);
+			}
+		};
+
+		expect(app).toBeDefined();
+		console.log('Starting app with options:', options);
+		await start(app, options);
+		expect(app.server.listening).toBe(false);
+		expect(errorMessage).toBe('Host is not defined. Please set the HOST environment variable or provide a host in the options.');
 	});
 });
