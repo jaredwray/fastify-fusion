@@ -65,7 +65,8 @@ import { fastify, FuseOptions } from 'fastify-fusion';
 const fuseOptions: FuseOptions = {
   static: true,
   log: true,
-  helmet: false, // Disable helmet for simplicity
+  helmet: false,
+  rateLimit: false
 };
 
 const app = await fastify(fuseOptions);
@@ -80,15 +81,15 @@ import { fuse, FuseOptions } from 'fastify-fusion';
 import Fastify from 'fastify';
 const app = Fastify();
 const options: FuseOptions = {
-  cors: {
-    origin: '*', // Allow all origins
-  },
   helmet: {
     contentSecurityPolicy: false, // Disable CSP for simplicity
   },
   static: {
     path: '/static/', // Serve static files from /public
     dir: './static', // Path to the static files
+  },
+  rateLimit: {
+	max: 200, // Allow 200 requests per minute per IP address
   },
 };
 await fuse(app, options);
