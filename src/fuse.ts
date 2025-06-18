@@ -3,11 +3,13 @@ import {type FastifyInstance} from 'fastify';
 import {type StaticOptions, registerStatic} from './static.js';
 import {registerLog, defaultLoggingOptions, type LoggerOptions} from './log.js';
 import {defaultFastifyHelmetOptions, type FastifyHelmetOptions, registerHelmet} from './helmet.js';
+import {defaultFastifyRateLimitOptions, type FastifyRateLimitOptions, registerRateLimit} from './rate-limit.js';
 
 export type FuseOptions = {
 	static?: boolean | StaticOptions;
 	log?: boolean | LoggerOptions;
 	helmet?: boolean | FastifyHelmetOptions;
+	rateLimit?: boolean | FastifyRateLimitOptions;
 };
 
 export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Promise<void> {
@@ -16,6 +18,7 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 		static: true,
 		log: true,
 		helmet: true,
+		rateLimit: true,
 	};
 
 	// Register the logger
@@ -46,5 +49,13 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 	} else if (options.helmet !== false) {
 		// Register the default helmet options if they are not specified
 		await registerHelmet(fastify, defaultFastifyHelmetOptions);
+	}
+
+	// Register the rate limit
+	if (options.rateLimit !== undefined && typeof options.rateLimit !== 'boolean') {
+		await registerRateLimit(fastify, options.rateLimit);
+	} else if (options.rateLimit !== false) {
+		// Register the default rate limit options if they are not specified
+		await registerRateLimit(fastify, defaultFastifyRateLimitOptions);
 	}
 }
