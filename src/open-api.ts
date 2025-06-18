@@ -11,7 +11,7 @@ export type OpenApiOptions = {
 	version?: string;
 	openApiRoutePrefix?: string;
 	docsRoutePath?: string;
-	scalarPrefix?: string;
+	docsUxPrefix?: string;
 };
 
 export const defaultOpenApiOptions = {
@@ -20,7 +20,7 @@ export const defaultOpenApiOptions = {
 	version: '0.0.0',
 	openApiRoutePrefix: '/openapi',
 	docsRoutePath: '/',
-	scalarPrefix: '/scalar',
+	docsUxPrefix: '/docs-ux',
 };
 
 export const fastifySwaggerConfig = {
@@ -44,7 +44,7 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 		config.description = options.description ?? pkg?.packageJson.description ?? defaultOpenApiOptions.description;
 		config.version = options.version ?? pkg?.packageJson.version ?? defaultOpenApiOptions.version;
 		config.openApiRoutePrefix = options.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
-		config.scalarPrefix = options.scalarPrefix ?? defaultOpenApiOptions.scalarPrefix;
+		config.docsUxPrefix = options.docsUxPrefix ?? defaultOpenApiOptions.docsUxPrefix;
 	}
 
 	const swaggerConfig = fastifySwaggerConfig;
@@ -80,7 +80,7 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 	// Add static path for scalar from node modules
 	await fastify.register(fastifyStatic, {
 		root: path.resolve('./node_modules/@scalar/api-reference/dist'),
-		prefix: config.scalarPrefix,
+		prefix: config.docsUxPrefix,
 		decorateReply: false,
 	});
 
@@ -93,6 +93,7 @@ export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOpti
 
 	fastify.get(indexPath, {schema: {hide: true}}, async (_request: FastifyRequest, reply: FastifyReply) => {
 		const openApiRoutePrefix = options?.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
+		const docsUxPrefix = options?.docsUxPrefix ?? defaultOpenApiOptions.docsUxPrefix;
 
 		const redocHtml = `
             <!doctype html>
@@ -110,7 +111,7 @@ export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOpti
                 id="api-reference"
                 data-url="${openApiRoutePrefix}/json"></script>
 
-              <script src="/scalar/browser/standalone.js"></script>
+              <script src="${docsUxPrefix}/browser/standalone.js"></script>
             </body>
             </html>
             `;

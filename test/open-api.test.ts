@@ -79,7 +79,7 @@ describe('Open API', async () => {
 
 		const scalarResponse = await fastify.inject({
 			method: 'GET',
-			url: '/scalar/browser/standalone.js',
+			url: '/docs-ux/browser/standalone.js',
 		});
 
 		const openApiResponse = await fastify.inject({
@@ -96,5 +96,6 @@ describe('Open API', async () => {
 		expect(openApiResponse.body).toContain('"openapi":');
 
 		expect(scalarResponse.statusCode).toBe(200);
+		expect(scalarResponse.body).toContain('scalar');
 	});
 });
