@@ -12,7 +12,8 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 # Features
 - **Fastify** - Easily create a Fastify app with sensible defaults via `fastify()` or `fuse()`.
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
-- **Helmet** - Security headers set using `@fastify/helmett` with sensible defaults.
+- **OpenAPI** - OpenAPI docs generated using `fastify-swagger` and `scalar` with sensible defaults.
+- **Helmet** - Security headers set using `@fastify/helmet` with sensible defaults.
 - **Logging** - Pino Configured using `pino-pretty` to make it easy to read.
 - **Rate Limiting** - Rate limiting using `@fastify/rate-limit` with sensible defaults.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
@@ -26,6 +27,7 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 - [Static Paths](#static-paths)
 - [Logging](#logging)
 - [Helmet](#helmet)
+- [Rate Limiting](#rate-limiting)
 - [How to Contribute](#how-to-contribute)
 - [Licensing and Copyright](#licensing-and-copyright)
 
@@ -288,6 +290,38 @@ const options: FuseOptions = {
   rateLimit: {
 	max: 200, // Allow 200 requests per minute per IP address
   },
+};
+await fuse(app, options);
+```
+
+# Open API and Docs UX
+
+`fastify-fusion` integrates with `fastify-swagger` and `scalar` to provide OpenAPI documentation and a user-friendly interface for exploring your API. By default, it serves the OpenAPI documentation at `/docs/json` and the Scalar UX at `/`. You can customize the route prefixes and the static path for the docs UX.
+
+You can customize the OpenAPI options by passing in an `OpenApiOptions` object to the `fuse` function. Here is an example of how to customize the OpenAPI options:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  openApi: {
+	openApiRoutePrefix: '/api-docs', // Change the OpenAPI JSON route prefix
+	docsPrefix: '/docs', // Change the OpenAPI docs route prefix
+	docsUxPrefix: '/docs-ux', // Change the Scalar UX route prefix
+  },
+};
+await fuse(app, options);
+```
+
+You can also set it to `false` to disable the OpenAPI documentation and Scalar UX:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+	openApi: false, // Disable OpenAPI documentation and Scalar UX
 };
 await fuse(app, options);
 ```
