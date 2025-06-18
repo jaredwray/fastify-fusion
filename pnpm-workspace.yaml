@@ -2,3 +2,4 @@ onlyBuiltDependencies:
   - '@swc/core'
   - esbuild
   - unrs-resolver
+  - vue-demi

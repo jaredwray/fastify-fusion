@@ -4,12 +4,14 @@ import {type StaticOptions, registerStatic} from './static.js';
 import {registerLog, defaultLoggingOptions, type LoggerOptions} from './log.js';
 import {defaultFastifyHelmetOptions, type FastifyHelmetOptions, registerHelmet} from './helmet.js';
 import {defaultFastifyRateLimitOptions, type FastifyRateLimitOptions, registerRateLimit} from './rate-limit.js';
+import {defaultOpenApiOptions, registerOpenApi, type OpenApiOptions} from './open-api.js';
 
 export type FuseOptions = {
 	static?: boolean | StaticOptions;
 	log?: boolean | LoggerOptions;
 	helmet?: boolean | FastifyHelmetOptions;
 	rateLimit?: boolean | FastifyRateLimitOptions;
+	openApi?: boolean | OpenApiOptions;
 };
 
 export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Promise<void> {
@@ -19,6 +21,7 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 		log: true,
 		helmet: true,
 		rateLimit: true,
+		openApi: true,
 	};
 
 	// Register the logger
@@ -57,5 +60,13 @@ export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Pro
 	} else if (options.rateLimit !== false) {
 		// Register the default rate limit options if they are not specified
 		await registerRateLimit(fastify, defaultFastifyRateLimitOptions);
+	}
+
+	// Register the OpenAPI documentation
+	if (options.openApi !== undefined && typeof options.openApi !== 'boolean') {
+		await registerOpenApi(fastify, options.openApi);
+	} else if (options.openApi !== false) {
+		// Register the default OpenAPI options if they are not specified
+		await registerOpenApi(fastify, defaultOpenApiOptions);
 	}
 }
