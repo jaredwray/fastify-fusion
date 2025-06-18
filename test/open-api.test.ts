@@ -1,9 +1,8 @@
 import {describe, test, expect} from 'vitest';
 import Fastify from 'fastify';
 import {
-	fuse, start, type StartOptions, type FuseOptions,
+	fuse, type FuseOptions,
 } from '../src/index.js';
-import {type OpenApiOptions} from '../src/open-api.js';
 
 describe('Open API', async () => {
 	test('should be able to fuse with OpenAPI', async () => {
@@ -78,6 +77,11 @@ describe('Open API', async () => {
 			url: '/docs',
 		});
 
+		const scalarResponse = await fastify.inject({
+			method: 'GET',
+			url: '/scalar/browser/standalone.js',
+		});
+
 		const openApiResponse = await fastify.inject({
 			method: 'GET',
 			url: '/openapi/json',
@@ -90,5 +94,7 @@ describe('Open API', async () => {
 		expect(openApiResponse.statusCode).toBe(200);
 		expect(openApiResponse.headers['content-type']).toBe('application/json; charset=utf-8');
 		expect(openApiResponse.body).toContain('"openapi":');
+
+		expect(scalarResponse.statusCode).toBe(200);
 	});
 });

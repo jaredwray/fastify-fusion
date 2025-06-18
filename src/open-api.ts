@@ -1,3 +1,5 @@
+import path from 'node:path';
+import fastifyStatic from '@fastify/static';
 import {type FastifyInstance, type FastifyRequest, type FastifyReply} from 'fastify';
 import {fastifySwagger} from '@fastify/swagger';
 import {fastifySwaggerUi} from '@fastify/swagger-ui';
@@ -9,6 +11,7 @@ export type OpenApiOptions = {
 	version?: string;
 	openApiRoutePrefix?: string;
 	docsRoutePath?: string;
+	scalarPrefix?: string;
 };
 
 export const defaultOpenApiOptions = {
@@ -17,6 +20,7 @@ export const defaultOpenApiOptions = {
 	version: '0.0.0',
 	openApiRoutePrefix: '/openapi',
 	docsRoutePath: '/',
+	scalarPrefix: '/scalar',
 };
 
 export const fastifySwaggerConfig = {
@@ -40,6 +44,7 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 		config.description = options.description ?? pkg?.packageJson.description ?? defaultOpenApiOptions.description;
 		config.version = options.version ?? pkg?.packageJson.version ?? defaultOpenApiOptions.version;
 		config.openApiRoutePrefix = options.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
+		config.scalarPrefix = options.scalarPrefix ?? defaultOpenApiOptions.scalarPrefix;
 	}
 
 	const swaggerConfig = fastifySwaggerConfig;
@@ -70,6 +75,13 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 
 		transformSpecification: (swaggerObject, _request, _reply) => swaggerObject,
 		transformSpecificationClone: true,
+	});
+
+	// Add static path for scalar from node modules
+	await fastify.register(fastifyStatic, {
+		root: path.resolve('./node_modules/@scalar/api-reference/dist'),
+		prefix: config.scalarPrefix,
+		decorateReply: false,
 	});
 
 	// Register the docs route
