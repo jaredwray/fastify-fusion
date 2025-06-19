@@ -91,6 +91,7 @@ describe('Fastify Start', async () => {
 		expect(app).toBeDefined();
 		await start(app);
 		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
 	});
 
 	test('should error on missing port via log', async () => {
