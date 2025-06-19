@@ -1,5 +1,3 @@
-import path from 'node:path';
-import fastifyStatic from '@fastify/static';
 import {type FastifyInstance, type FastifyRequest, type FastifyReply} from 'fastify';
 import {fastifySwagger} from '@fastify/swagger';
 import {fastifySwaggerUi} from '@fastify/swagger-ui';
@@ -11,7 +9,6 @@ export type OpenApiOptions = {
 	version?: string;
 	openApiRoutePrefix?: string;
 	docsRoutePath?: string;
-	docsUxPrefix?: string;
 };
 
 export const defaultOpenApiOptions = {
@@ -20,7 +17,6 @@ export const defaultOpenApiOptions = {
 	version: '0.0.0',
 	openApiRoutePrefix: '/openapi',
 	docsRoutePath: '/',
-	docsUxPrefix: '/docs-ux',
 };
 
 export const fastifySwaggerConfig = {
@@ -51,7 +47,6 @@ export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOpt
 		config.description = options.description ?? pkg?.packageJson.description ?? defaultOpenApiOptions.description;
 		config.version = options.version ?? pkg?.packageJson.version ?? defaultOpenApiOptions.version;
 		config.openApiRoutePrefix = options.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
-		config.docsUxPrefix = options.docsUxPrefix ?? defaultOpenApiOptions.docsUxPrefix;
 		config.docsRoutePath = options.docsRoutePath ?? defaultOpenApiOptions.docsRoutePath;
 	}
 
@@ -87,13 +82,6 @@ export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOpt
 
 	fastify.log.info(`Fasity OpenAPI Registered: ${JSON.stringify(config)}`);
 
-	// Add static path for scalar from node modules
-	await fastify.register(fastifyStatic, {
-		root: path.resolve('./node_modules/@scalar/api-reference/dist'),
-		prefix: config.docsUxPrefix,
-		decorateReply: false,
-	});
-
 	// Register the docs route
 	await indexRoute(fastify, config);
 
@@ -105,7 +93,6 @@ export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOpti
 
 	fastify.get(indexPath, {schema: {hide: true}}, async (_request: FastifyRequest, reply: FastifyReply) => {
 		const openApiRoutePrefix = options?.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
-		const docsUxPrefix = options?.docsUxPrefix ?? defaultOpenApiOptions.docsUxPrefix;
 
 		const redocHtml = `
             <!doctype html>
@@ -123,7 +110,7 @@ export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOpti
                 id="api-reference"
                 data-url="${openApiRoutePrefix}/json"></script>
 
-              <script src="${docsUxPrefix}/browser/standalone.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.31.17/dist/browser/standalone.min.js"></script>
             </body>
             </html>
             `;

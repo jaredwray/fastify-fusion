@@ -38,7 +38,9 @@ export async function start(fastify: any, options: StartOptions = defaultStartOp
 export {fuse, type FuseOptions} from './fuse.js';
 export {fuseStatic} from './static.js';
 export type {StaticPath, StaticOptions} from './static.js';
-export {fuseLog, type LoggerOptions, defaultLoggingOptions} from './log.js';
+export {
+	fuseLog, logger, type LoggerOptions, defaultLoggingOptions,
+} from './log.js';
 export {fuseHelmet, type FastifyHelmetOptions, defaultFastifyHelmetOptions} from './helmet.js';
 export {fuseRateLimit, type FastifyRateLimitOptions, defaultFastifyRateLimitOptions} from './rate-limit.js';
 export {fuseOpenApi, type OpenApiOptions} from './open-api.js';

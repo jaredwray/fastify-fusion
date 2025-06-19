@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import {describe, test, expect} from 'vitest';
 import fastify from 'fastify';
 import {

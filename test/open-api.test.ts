@@ -69,11 +69,6 @@ describe('Open API', async () => {
 			url: '/docs',
 		});
 
-		const scalarResponse = await app.inject({
-			method: 'GET',
-			url: '/docs-ux/browser/standalone.js',
-		});
-
 		const openApiResponse = await app.inject({
 			method: 'GET',
 			url: '/openapi/json',
@@ -86,8 +81,5 @@ describe('Open API', async () => {
 		expect(openApiResponse.statusCode).toBe(200);
 		expect(openApiResponse.headers['content-type']).toBe('application/json; charset=utf-8');
 		expect(openApiResponse.body).toContain('"openapi":');
-
-		expect(scalarResponse.statusCode).toBe(200);
-		expect(scalarResponse.body).toContain('scalar');
 	});
 });
