@@ -18,7 +18,7 @@ export async function fuseLog(fastify: FastifyInstance, options: LoggerOptions):
 	fastify.log.info(`Fasity Logging Registered: ${JSON.stringify(options)}`);
 }
 
-export function logger(options?: LoggerOptions): LoggerOptions {
+export function logger(options?: LoggerOptions): pino.Logger {
 	const options_ = options ?? defaultLoggingOptions;
 	return pino(options_);
 }
