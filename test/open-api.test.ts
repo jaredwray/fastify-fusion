@@ -1,13 +1,12 @@
 import {describe, test, expect} from 'vitest';
-import Fastify from 'fastify';
+import fastify from 'fastify';
 import {
 	fuse, type FuseOptions,
 } from '../src/index.js';
 
 describe('Open API', async () => {
 	test('should be able to fuse with OpenAPI', async () => {
-		// eslint-disable-next-line new-cap
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 			openApi: true,
@@ -20,8 +19,7 @@ describe('Open API', async () => {
 	});
 
 	test('should be able to fuse with OpenAPI', async () => {
-		// eslint-disable-next-line new-cap
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 			openApi: true,
@@ -34,18 +32,17 @@ describe('Open API', async () => {
 	});
 
 	test('should be able to access the OpenAPI defaults', async () => {
-		// eslint-disable-next-line new-cap
-		const fastify = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			openApi: true,
 		};
-		await fuse(fastify, options);
-		const response = await fastify.inject({
+		await fuse(app, options);
+		const response = await app.inject({
 			method: 'GET',
 			url: '/',
 		});
 
-		const openApiResponse = await fastify.inject({
+		const openApiResponse = await app.inject({
 			method: 'GET',
 			url: '/openapi/json',
 		});
@@ -60,25 +57,24 @@ describe('Open API', async () => {
 	});
 
 	test('should be able to access the OpenAPI docs', async () => {
-		// eslint-disable-next-line new-cap
-		const fastify = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			openApi: {
 				docsRoutePath: '/docs',
 			},
 		};
-		await fuse(fastify, options);
-		const response = await fastify.inject({
+		await fuse(app, options);
+		const response = await app.inject({
 			method: 'GET',
 			url: '/docs',
 		});
 
-		const scalarResponse = await fastify.inject({
+		const scalarResponse = await app.inject({
 			method: 'GET',
 			url: '/docs-ux/browser/standalone.js',
 		});
 
-		const openApiResponse = await fastify.inject({
+		const openApiResponse = await app.inject({
 			method: 'GET',
 			url: '/openapi/json',
 		});

@@ -12,10 +12,7 @@ export const defaultStartOptions: StartOptions = {
 	message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
 };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export type fastifyStart = {listen: (arg0: {port: number; host: string}) => any; log: {info: (arg0: string) => void; error: (arg0: unknown) => void}};
-
-export async function start(fastify: fastifyStart, options: StartOptions = defaultStartOptions): Promise<void> {
+export async function start(fastify: any, options: StartOptions = defaultStartOptions): Promise<void> {
 	try {
 		const portString = process.env.PORT ?? options.port;
 

@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, new-cap */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {describe, test, expect} from 'vitest';
-import Fastify from 'fastify';
+import fastify from 'fastify';
 import {
 	fuse, start, type StartOptions, type FuseOptions,
 } from '../src/index.js';
@@ -12,7 +12,7 @@ describe('Fuse', async () => {
 	});
 
 	test('should execute fuse', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 		};
@@ -24,7 +24,7 @@ describe('Fuse', async () => {
 	});
 
 	test('should be able to add in the log options', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 			log: {
@@ -39,7 +39,7 @@ describe('Fuse', async () => {
 	});
 
 	test('should be able to add in the static options', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: [
 				{
@@ -54,7 +54,7 @@ describe('Fuse', async () => {
 	});
 
 	test('should be able to use the helmet options', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 			helmet: {
@@ -70,7 +70,7 @@ describe('Fuse', async () => {
 	});
 
 	test('should be able to use the rate limit options', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: FuseOptions = {
 			static: true,
 			rateLimit: {
@@ -87,14 +87,14 @@ describe('Fuse', async () => {
 
 describe('Fastify Start', async () => {
 	test('should start the fastify server', async () => {
-		const app = Fastify();
+		const app = fastify();
 		expect(app).toBeDefined();
 		await start(app);
 		expect(app.server.listening).toBe(true);
 	});
 
 	test('should error on missing port via log', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: StartOptions = {
 			port: undefined,
 			host: '0.0.0.0',
@@ -119,7 +119,7 @@ describe('Fastify Start', async () => {
 	});
 
 	test('should error on missing host via log', async () => {
-		const app = Fastify();
+		const app = fastify();
 		const options: StartOptions = {
 			port: 3000,
 			host: undefined,
