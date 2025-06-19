@@ -10,7 +10,7 @@
 Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.
 
 # Features
-- **Fastify** - Easily create a Fastify app with sensible defaults via `fastify()` or `fuse()`.
+- **Fuse** - Easily create a Fastify app with sensible defaults via `fuse()`.
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
 - **OpenAPI** - OpenAPI docs generated using `fastify-swagger` and `scalar` with sensible defaults.
 - **Helmet** - Security headers set using `@fastify/helmet` with sensible defaults.
@@ -41,28 +41,20 @@ npm install fastify-fusion fastify
 If you already have a Fastify app, you can use `fuse` to add the default options and plugins to your app.
 
 ```typescript
+import fastify from 'fastify';
 import { fuse, FuseOptions } from 'fastify-fusion';
-import Fastify from 'fastify';
 
-const app = Fastify();
+const app = fastify();
 
 // Fuse the app. It will use the default options if none are provided. If you want to use your own options, pass them in as the second argument.
-
 await fuse(app);
-```
-
-Want to just get your app up and running? You can use the `fastify()` function to create a new Fastify app with the default options.
-
-```typescript
-import { fastify } from 'fastify-fusion';
-
-const app = await fastify();
 ```
 
 You can also pass in the `FuseOptions` to customize your fastify instance.
 
 ```typescript
-import { fastify, FuseOptions } from 'fastify-fusion';
+import fastify from 'fastify';
+import { fuse, FuseOptions } from 'fastify-fusion';
 
 const fuseOptions: FuseOptions = {
   static: true,
@@ -71,7 +63,22 @@ const fuseOptions: FuseOptions = {
   rateLimit: false
 };
 
-const app = await fastify(fuseOptions);
+const app = await fuse(app, fuseOptions);
+```
+
+You can also use the built in `start()` function to get up and running quickly. This function will create a Fastify app and start the server for you.
+
+```typescript
+import fastify from 'fastify';
+import { start, fuse } from 'fastify-fusion';
+
+const app = fastify();
+
+// fuse the app with default options
+await fuse(app);
+
+// start the app. Set the options with StartOptions type.
+await start(app);
 ```
 
 # Fuse Options
