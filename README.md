@@ -14,7 +14,7 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
 - **OpenAPI** - OpenAPI docs generated using `fastify-swagger` and `scalar` with sensible defaults.
 - **Helmet** - Security headers set using `@fastify/helmet` with sensible defaults.
-- **Logging** - Pino Configured using `pino-pretty` to make it easy to read.
+- **Logging** - Pino Configured using `pino-pretty` to make it easy to read and access to a `logger` instance.
 - **Rate Limiting** - Rate limiting using `@fastify/rate-limit` with sensible defaults.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
 - **Regularly updated**: Updated regularly to keep up with the latest Fastify and TypeScript features.
@@ -209,6 +209,15 @@ const options: FuseOptions = {
   },
 };
 await fuse(app, options);
+```
+
+If you want to access the logger instance, you can use the `logger` function. This function will return a logger instance that you can use to log messages in your application. This will use the default logging options if none are provided. Here is an example of how to use the logger instance:
+
+```typescript
+import { logger } from 'fastify-fusion';
+
+const log = logger();
+log.info('This is an info message');
 ```
 
 # Helmet
