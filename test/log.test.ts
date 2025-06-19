@@ -1,6 +1,8 @@
 import {describe, test, expect} from 'vitest';
 import fastify from 'fastify';
-import {fuseLog, type LoggerOptions, defaultLoggingOptions} from '../src/log.js';
+import {
+	fuseLog, logger, type LoggerOptions, defaultLoggingOptions,
+} from '../src/log.js';
 
 describe('Log', async () => {
 	test('should export all modules', async () => {
@@ -17,5 +19,16 @@ describe('Log', async () => {
 		await fuseLog(app, options);
 		expect(app).toBeDefined();
 		expect(app).toBeTypeOf('object');
+	});
+
+	test('should get logger without options', async () => {
+		const options: LoggerOptions = defaultLoggingOptions;
+		const log = logger(options);
+		expect(log).toBeDefined();
+		expect(log).toBeTypeOf('object');
+
+		const newLog = logger();
+		expect(newLog).toBeDefined();
+		expect(newLog).toBeTypeOf('object');
 	});
 });

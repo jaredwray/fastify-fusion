@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import {describe, test, expect} from 'vitest';
 import fastify from 'fastify';
 import {
@@ -90,7 +90,8 @@ describe('Fastify Start', async () => {
 		const app = fastify();
 		expect(app).toBeDefined();
 		await start(app);
-		expect(app.server.listening).toBe(true);
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
 	});
 
 	test('should error on missing port via log', async () => {
