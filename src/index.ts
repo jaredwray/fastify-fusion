@@ -1,20 +1,4 @@
 import process from 'node:process';
-import Fastify, {type FastifyInstance} from 'fastify';
-import {type FuseOptions, fuse} from './fuse.js';
-
-export {fuse, type FuseOptions} from './fuse.js';
-export {registerStatic} from './static.js';
-export type {StaticPath, StaticOptions} from './static.js';
-export {registerLog, type LoggerOptions, defaultLoggingOptions} from './log.js';
-
-export async function fastify(options?: FuseOptions): Promise<FastifyInstance> {
-	// eslint-disable-next-line new-cap
-	const fastify = Fastify();
-
-	await fuse(fastify, options);
-
-	return fastify;
-}
 
 export type StartOptions = {
 	port?: number;
@@ -28,7 +12,10 @@ export const defaultStartOptions: StartOptions = {
 	message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
 };
 
-export async function start(fastify: FastifyInstance, options: StartOptions = defaultStartOptions): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type fastifyStart = {listen: (arg0: {port: number; host: string}) => any; log: {info: (arg0: string) => void; error: (arg0: unknown) => void}};
+
+export async function start(fastify: fastifyStart, options: StartOptions = defaultStartOptions): Promise<void> {
 	try {
 		const portString = process.env.PORT ?? options.port;
 
@@ -44,15 +31,17 @@ export async function start(fastify: FastifyInstance, options: StartOptions = de
 			throw new Error('Host is not defined. Please set the HOST environment variable or provide a host in the options.');
 		}
 
-		let message = `🌏 started successfully at http://${host}:${port}`;
-		if (options.message !== undefined && typeof options.message === 'function') {
-			message = options.message(host, port);
-		}
-
 		await fastify.listen({port, host});
-		fastify.log.info(message);
 	} catch (error) {
 		/* c8 ignore next 4 */
 		fastify.log.error(error);
 	}
 }
+
+export {fuse, type FuseOptions} from './fuse.js';
+export {fuseStatic} from './static.js';
+export type {StaticPath, StaticOptions} from './static.js';
+export {fuseLog, type LoggerOptions, defaultLoggingOptions} from './log.js';
+export {fuseHelmet, type FastifyHelmetOptions, defaultFastifyHelmetOptions} from './helmet.js';
+export {fuseRateLimit, type FastifyRateLimitOptions, defaultFastifyRateLimitOptions} from './rate-limit.js';
+export {fuseOpenApi, type OpenApiOptions} from './open-api.js';

@@ -35,16 +35,24 @@ export const fastifySwaggerConfig = {
 	},
 };
 
-export async function registerOpenApi(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
+export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
 	// Register swagger
 	const config = defaultOpenApiOptions;
 	const pkg = await readPackageUp();
+	// Set the pkg info
+	if (pkg && pkg.packageJson) {
+		config.title = pkg.packageJson.name ?? defaultOpenApiOptions.title;
+		config.description = pkg.packageJson.description ?? defaultOpenApiOptions.description;
+		config.version = pkg.packageJson.version ?? defaultOpenApiOptions.version;
+	}
+
 	if (options) {
 		config.title = options.title ?? pkg?.packageJson.name ?? defaultOpenApiOptions.title;
 		config.description = options.description ?? pkg?.packageJson.description ?? defaultOpenApiOptions.description;
 		config.version = options.version ?? pkg?.packageJson.version ?? defaultOpenApiOptions.version;
 		config.openApiRoutePrefix = options.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
 		config.docsUxPrefix = options.docsUxPrefix ?? defaultOpenApiOptions.docsUxPrefix;
+		config.docsRoutePath = options.docsRoutePath ?? defaultOpenApiOptions.docsRoutePath;
 	}
 
 	const swaggerConfig = fastifySwaggerConfig;
@@ -77,6 +85,8 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 		transformSpecificationClone: true,
 	});
 
+	fastify.log.info(`Fasity OpenAPI Registered: ${JSON.stringify(config)}`);
+
 	// Add static path for scalar from node modules
 	await fastify.register(fastifyStatic, {
 		root: path.resolve('./node_modules/@scalar/api-reference/dist'),
@@ -85,7 +95,9 @@ export async function registerOpenApi(fastify: FastifyInstance, options?: OpenAp
 	});
 
 	// Register the docs route
-	await indexRoute(fastify, options);
+	await indexRoute(fastify, config);
+
+	fastify.log.info(`Fasity API Docs Registered: ${config.docsRoutePath}`);
 }
 
 export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {

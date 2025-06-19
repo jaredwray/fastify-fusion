@@ -24,9 +24,7 @@ describe('Open API', async () => {
 		const app = Fastify();
 		const options: FuseOptions = {
 			static: true,
-			openApi: {
-				docsRoutePath: '/docs',
-			},
+			openApi: true,
 		};
 		await fuse(app, options);
 		expect(app).toBeDefined();
@@ -39,7 +37,6 @@ describe('Open API', async () => {
 		// eslint-disable-next-line new-cap
 		const fastify = Fastify();
 		const options: FuseOptions = {
-			static: true,
 			openApi: true,
 		};
 		await fuse(fastify, options);
@@ -66,7 +63,6 @@ describe('Open API', async () => {
 		// eslint-disable-next-line new-cap
 		const fastify = Fastify();
 		const options: FuseOptions = {
-			static: true,
 			openApi: {
 				docsRoutePath: '/docs',
 			},
