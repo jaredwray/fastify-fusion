@@ -42,7 +42,7 @@ export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 	enableCSPNonces: false,
 };
 
-export async function registerHelmet(fastify: FastifyInstance, options: FastifyHelmetOptions): Promise<void> {
+export async function fuseHelmet(fastify: FastifyInstance, options: FastifyHelmetOptions): Promise<void> {
 	await fastify.register(fastifyHelmet, options);
 
 	fastify.log.info(`Fasity Helment Registered: ${JSON.stringify(options)}`);

@@ -13,9 +13,9 @@ export const defaultLoggingOptions = {
 	},
 };
 
-export async function registerLog(fastify: FastifyInstance, options: LoggerOptions): Promise<void> {
+export async function fuseLog(fastify: FastifyInstance, options: LoggerOptions): Promise<void> {
 	fastify.log = pino(options);
-	fastify.log.info('logging registered');
+	fastify.log.info(`Fasity Logging Registered: ${JSON.stringify(options)}`);
 }
 
 export type {LoggerOptions} from 'pino';

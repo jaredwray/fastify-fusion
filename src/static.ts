@@ -9,7 +9,7 @@ export type StaticPath = {
 
 export type StaticOptions = StaticPath[];
 
-export async function registerStatic(fastify: FastifyInstance, options: StaticOptions): Promise<void> {
+export async function fuseStatic(fastify: FastifyInstance, options: StaticOptions): Promise<void> {
 	for (const staticPath of options) {
 		let rootPath = staticPath.dir;
 		if (!path.isAbsolute(rootPath)) {
