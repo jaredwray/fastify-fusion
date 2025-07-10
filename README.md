@@ -14,6 +14,7 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
 - **OpenAPI** - OpenAPI docs generated using `fastify-swagger` and `scalar` with sensible defaults.
 - **Helmet** - Security headers set using `@fastify/helmet` with sensible defaults.
+- **CORS** - CORS enabled using `@fastify/cors` with sensible defaults for apis.
 - **Logging** - Pino Configured using `pino-pretty` to make it easy to read and access to a `logger` instance.
 - **Rate Limiting** - Rate limiting using `@fastify/rate-limit` with sensible defaults.
 - **Static Paths**: Default `./public` static path and easy to add / configure your own.
@@ -28,6 +29,8 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 - [Logging](#logging)
 - [Helmet](#helmet)
 - [Rate Limiting](#rate-limiting)
+- [CORS](#cors)
+- [Open API and Docs UX](#open-api-and-docs-ux)
 - [How to Contribute](#how-to-contribute)
 - [Licensing and Copyright](#licensing-and-copyright)
 
@@ -308,6 +311,41 @@ const options: FuseOptions = {
   },
 };
 await fuse(app, options);
+```
+
+# CORS
+
+`fastify-fusion` uses `@fastify/cors` to enable CORS for your API. By default, it allows all origins and methods. You can customize the CORS behavior by passing in a `FastifyCorsOptions` object to the `fuse` function. Here is an example of how to customize the CORS options:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import Fastify from 'fastify';
+const app = Fastify();
+const options: FuseOptions = {
+  cors: {
+	origin: [
+		'https://app.yourdomain.com',
+		'https://staging.yourdomain.com'
+	],
+	methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Bearer'], // Allowed headers
+	exposedHeaders: ['Content-Length', 'X-Requested-With'], // Exposed headers
+	credentials: true, // Allow credentials
+  },
+};
+await fuse(app, options);
+```
+
+Here are the default CORS options:
+
+```typescript
+export const defaultFastifyCorsOptions: FastifyCorsOptions = {
+	origin: true, // Allow all origins
+	methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Bearer'], // Allowed headers
+	exposedHeaders: ['Content-Length', 'X-Requested-With'], // Exposed headers
+	credentials: true, // Allow credentials
+};
 ```
 
 # Open API and Docs UX
