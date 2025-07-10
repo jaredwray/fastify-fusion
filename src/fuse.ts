@@ -4,6 +4,7 @@ import {type StaticOptions, fuseStatic} from './static.js';
 import {fuseLog, defaultLoggingOptions, type LoggerOptions} from './log.js';
 import {defaultFastifyHelmetOptions, type FastifyHelmetOptions, fuseHelmet} from './helmet.js';
 import {defaultFastifyRateLimitOptions, type FastifyRateLimitOptions, fuseRateLimit} from './rate-limit.js';
+import {fuseCors, defaultFastifyCorsOptions, type FastifyCorsOptions} from './cors.js';
 import {fuseOpenApi, type OpenApiOptions} from './open-api.js';
 
 export type FuseOptions = {
@@ -11,6 +12,7 @@ export type FuseOptions = {
 	log?: boolean | LoggerOptions;
 	helmet?: boolean | FastifyHelmetOptions;
 	rateLimit?: boolean | FastifyRateLimitOptions;
+	cors?: boolean | FastifyCorsOptions;
 	openApi?: boolean | OpenApiOptions;
 };
 
@@ -21,6 +23,7 @@ export async function fuse(fastify: any, options?: FuseOptions): Promise<void> {
 		log: true,
 		helmet: true,
 		rateLimit: true,
+		cors: true,
 		openApi: true,
 	};
 
@@ -60,6 +63,14 @@ export async function fuse(fastify: any, options?: FuseOptions): Promise<void> {
 	} else if (options.rateLimit !== false) {
 		// Register the default rate limit options if they are not specified
 		await fuseRateLimit(fastify, defaultFastifyRateLimitOptions);
+	}
+
+	// Register the CORS
+	if (options.cors !== undefined && typeof options.cors !== 'boolean') {
+		await fuseCors(fastify, options.cors);
+	} else if (options.cors !== false) {
+		// Register the default CORS options if they are not specified
+		await fuseCors(fastify, defaultFastifyCorsOptions);
 	}
 
 	// Register the open api

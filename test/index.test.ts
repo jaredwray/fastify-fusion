@@ -83,6 +83,21 @@ describe('Fuse', async () => {
 		expect(app.server).toBeDefined();
 		expect(app.server).toBeTypeOf('object');
 	});
+
+	test('should be able to use the CORS options', async () => {
+		const app = fastify();
+		const options: FuseOptions = {
+			cors: {
+				origin: '*',
+				methods: ['GET', 'POST'],
+			},
+		};
+		await fuse(app, options);
+		expect(app).toBeDefined();
+		expect(app).toBeTypeOf('object');
+		expect(app.server).toBeDefined();
+		expect(app.server).toBeTypeOf('object');
+	});
 });
 
 describe('Fastify Start', async () => {
