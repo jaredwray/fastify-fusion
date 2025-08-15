@@ -33,29 +33,22 @@ export const fastifySwaggerConfig = {
 
 export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
 	// Register swagger
-	const config = defaultOpenApiOptions;
+	// clone the defaults so repeated calls don't mutate the exported objects
+	const config: Required<OpenApiOptions> = structuredClone(defaultOpenApiOptions);
 	const pkg = await readPackageUp();
-	// Set the pkg info
-	if (pkg && pkg.packageJson) {
-		config.title = pkg.packageJson.name ?? defaultOpenApiOptions.title;
-		config.description = pkg.packageJson.description ?? defaultOpenApiOptions.description;
-		config.version = pkg.packageJson.version ?? defaultOpenApiOptions.version;
-	}
 
-	if (options) {
-		config.title = options.title ?? pkg?.packageJson.name ?? defaultOpenApiOptions.title;
-		config.description = options.description ?? pkg?.packageJson.description ?? defaultOpenApiOptions.description;
-		config.version = options.version ?? pkg?.packageJson.version ?? defaultOpenApiOptions.version;
-		config.openApiRoutePrefix = options.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
-		config.docsRoutePath = options.docsRoutePath ?? defaultOpenApiOptions.docsRoutePath;
-	}
+	config.title = options?.title ?? pkg?.packageJson?.name ?? config.title;
+	config.description = options?.description ?? pkg?.packageJson?.description ?? config.description;
+	config.version = options?.version ?? pkg?.packageJson?.version ?? config.version;
+	config.openApiRoutePrefix = options?.openApiRoutePrefix ?? config.openApiRoutePrefix;
+	config.docsRoutePath = options?.docsRoutePath ?? config.docsRoutePath;
 
-	const swaggerConfig = fastifySwaggerConfig;
+	const swaggerConfig: typeof fastifySwaggerConfig = structuredClone(fastifySwaggerConfig);
 	swaggerConfig.openapi.info.title = config.title;
 	swaggerConfig.openapi.info.description = config.description;
 	swaggerConfig.openapi.info.version = config.version;
 
-	await fastify.register(fastifySwagger, fastifySwaggerConfig);
+	await fastify.register(fastifySwagger, swaggerConfig);
 
 	// Register the swagger ui
 	await fastify.register(fastifySwaggerUi, {
@@ -80,12 +73,12 @@ export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOpt
 		transformSpecificationClone: true,
 	});
 
-	fastify.log.info(`Fasity OpenAPI Registered: ${JSON.stringify(config)}`);
+	fastify.log.info(`Fastify OpenAPI Registered: ${JSON.stringify(config)}`);
 
 	// Register the docs route
 	await indexRoute(fastify, config);
 
-	fastify.log.info(`Fasity API Docs Registered: ${config.docsRoutePath}`);
+	fastify.log.info(`Fastify API Docs Registered: ${config.docsRoutePath}`);
 }
 
 export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
