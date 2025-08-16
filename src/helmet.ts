@@ -1,6 +1,5 @@
-
-import {type FastifyInstance} from 'fastify';
-import {fastifyHelmet, type FastifyHelmetOptions} from '@fastify/helmet';
+import { type FastifyHelmetOptions, fastifyHelmet } from "@fastify/helmet";
+import type { FastifyInstance } from "fastify";
 
 export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 	// Turn off CSP (mostly for HTML) to avoid overhead
@@ -10,10 +9,10 @@ export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 	hidePoweredBy: true,
 
 	// Prevent your API from being framed
-	frameguard: {action: 'deny'},
+	frameguard: { action: "deny" },
 
 	// Disable DNS prefetching
-	dnsPrefetchControl: {allow: false},
+	dnsPrefetchControl: { allow: false },
 
 	// Enable HSTS for one year on HTTPS endpoints
 	hsts: {
@@ -29,10 +28,10 @@ export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 	xssFilter: true,
 
 	// Don't send Referer at all
-	referrerPolicy: {policy: 'no-referrer'},
+	referrerPolicy: { policy: "no-referrer" },
 
 	// Tighten cross-origin resource loading
-	crossOriginResourcePolicy: {policy: 'same-origin'},
+	crossOriginResourcePolicy: { policy: "same-origin" },
 
 	// You generally don't need the embedder/policy on an API
 	crossOriginEmbedderPolicy: false,
@@ -42,10 +41,13 @@ export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {
 	enableCSPNonces: false,
 };
 
-export async function fuseHelmet(fastify: FastifyInstance, options: FastifyHelmetOptions): Promise<void> {
+export async function fuseHelmet(
+	fastify: FastifyInstance,
+	options: FastifyHelmetOptions,
+): Promise<void> {
 	await fastify.register(fastifyHelmet, options);
 
 	fastify.log.info(`Fasity Helment Registered: ${JSON.stringify(options)}`);
 }
 
-export type {FastifyHelmetOptions} from '@fastify/helmet';
+export type { FastifyHelmetOptions } from "@fastify/helmet";

@@ -1,6 +1,8 @@
-
-import {type FastifyInstance} from 'fastify';
-import {fastifyRateLimit, type FastifyRateLimitOptions} from '@fastify/rate-limit';
+import {
+	type FastifyRateLimitOptions,
+	fastifyRateLimit,
+} from "@fastify/rate-limit";
+import type { FastifyInstance } from "fastify";
 
 export const defaultFastifyRateLimitOptions: FastifyRateLimitOptions = {
 	// Enable rate limiting
@@ -10,13 +12,16 @@ export const defaultFastifyRateLimitOptions: FastifyRateLimitOptions = {
 	// Time window for the rate limit
 	timeWindow: 60_000, // 1 minute in milliseconds
 	// allow list for local development and testing
-	allowList: ['127.0.0.1', '0.0.0.0'],
+	allowList: ["127.0.0.1", "0.0.0.0"],
 };
 
-export async function fuseRateLimit(fastify: FastifyInstance, options: FastifyRateLimitOptions): Promise<void> {
+export async function fuseRateLimit(
+	fastify: FastifyInstance,
+	options: FastifyRateLimitOptions,
+): Promise<void> {
 	await fastify.register(fastifyRateLimit, options);
 
 	fastify.log.info(`Fasity Rate Limit Registered: ${JSON.stringify(options)}`);
 }
 
-export type {FastifyRateLimitOptions} from '@fastify/rate-limit';
+export type { FastifyRateLimitOptions } from "@fastify/rate-limit";

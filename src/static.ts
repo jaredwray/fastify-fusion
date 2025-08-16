@@ -1,6 +1,6 @@
-import path from 'node:path';
-import {type FastifyInstance} from 'fastify';
-import fastifyStatic from '@fastify/static';
+import path from "node:path";
+import fastifyStatic from "@fastify/static";
+import type { FastifyInstance } from "fastify";
 
 export type StaticPath = {
 	dir: string;
@@ -9,7 +9,10 @@ export type StaticPath = {
 
 export type StaticOptions = StaticPath[];
 
-export async function fuseStatic(fastify: FastifyInstance, options: StaticOptions): Promise<void> {
+export async function fuseStatic(
+	fastify: FastifyInstance,
+	options: StaticOptions,
+): Promise<void> {
 	for (const staticPath of options) {
 		let rootPath = staticPath.dir;
 		if (!path.isAbsolute(rootPath)) {
@@ -22,6 +25,8 @@ export async function fuseStatic(fastify: FastifyInstance, options: StaticOption
 			prefix: staticPath.path,
 			decorateReply: false,
 		});
-		fastify.log.info(`Static path registered: ${staticPath.path} -> ${rootPath}`);
+		fastify.log.info(
+			`Static path registered: ${staticPath.path} -> ${rootPath}`,
+		);
 	}
 }
