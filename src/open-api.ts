@@ -1,7 +1,7 @@
-import type {FastifyInstance, FastifyRequest, FastifyReply} from 'fastify';
-import {fastifySwagger} from '@fastify/swagger';
-import {fastifySwaggerUi} from '@fastify/swagger-ui';
-import {readPackageUp} from 'read-package-up';
+import { fastifySwagger } from "@fastify/swagger";
+import { fastifySwaggerUi } from "@fastify/swagger-ui";
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { readPackageUp } from "read-package-up";
 
 export type OpenApiOptions = {
 	title?: string;
@@ -12,38 +12,47 @@ export type OpenApiOptions = {
 };
 
 export const defaultOpenApiOptions = {
-	title: 'Open API Documentation',
-	description: 'API Documentation for the Service',
-	version: '0.0.0',
-	openApiRoutePrefix: '/openapi',
-	docsRoutePath: '/',
+	title: "Open API Documentation",
+	description: "API Documentation for the Service",
+	version: "0.0.0",
+	openApiRoutePrefix: "/openapi",
+	docsRoutePath: "/",
 };
 
 export const fastifySwaggerConfig = {
 	openapi: {
 		info: {
-			title: 'Open API Documentation',
-			description: 'API Documentation for the Service',
-			version: '0.0.0',
+			title: "Open API Documentation",
+			description: "API Documentation for the Service",
+			version: "0.0.0",
 		},
-		consumes: ['application/json'],
-		produces: ['application/json'],
+		consumes: ["application/json"],
+		produces: ["application/json"],
 	},
 };
 
-export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
+export async function fuseOpenApi(
+	fastify: FastifyInstance,
+	options?: OpenApiOptions,
+): Promise<void> {
 	// Register swagger
 	// clone the defaults so repeated calls don't mutate the exported objects
-	const config: Required<OpenApiOptions> = structuredClone(defaultOpenApiOptions);
+	const config: Required<OpenApiOptions> = structuredClone(
+		defaultOpenApiOptions,
+	);
 	const pkg = await readPackageUp();
 
 	config.title = options?.title ?? pkg?.packageJson?.name ?? config.title;
-	config.description = options?.description ?? pkg?.packageJson?.description ?? config.description;
-	config.version = options?.version ?? pkg?.packageJson?.version ?? config.version;
-	config.openApiRoutePrefix = options?.openApiRoutePrefix ?? config.openApiRoutePrefix;
+	config.description =
+		options?.description ?? pkg?.packageJson?.description ?? config.description;
+	config.version =
+		options?.version ?? pkg?.packageJson?.version ?? config.version;
+	config.openApiRoutePrefix =
+		options?.openApiRoutePrefix ?? config.openApiRoutePrefix;
 	config.docsRoutePath = options?.docsRoutePath ?? config.docsRoutePath;
 
-	const swaggerConfig: typeof fastifySwaggerConfig = structuredClone(fastifySwaggerConfig);
+	const swaggerConfig: typeof fastifySwaggerConfig =
+		structuredClone(fastifySwaggerConfig);
 	swaggerConfig.openapi.info.title = config.title;
 	swaggerConfig.openapi.info.description = config.description;
 	swaggerConfig.openapi.info.version = config.version;
@@ -54,7 +63,7 @@ export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOpt
 	await fastify.register(fastifySwaggerUi, {
 		routePrefix: config.openApiRoutePrefix,
 		uiConfig: {
-			docExpansion: 'none',
+			docExpansion: "none",
 			deepLinking: false,
 		},
 		uiHooks: {
@@ -81,13 +90,21 @@ export async function fuseOpenApi(fastify: FastifyInstance, options?: OpenApiOpt
 	fastify.log.info(`Fastify API Docs Registered: ${config.docsRoutePath}`);
 }
 
-export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOptions): Promise<void> {
-	const indexPath = options?.docsRoutePath ?? defaultOpenApiOptions.docsRoutePath;
+export async function indexRoute(
+	fastify: FastifyInstance,
+	options?: OpenApiOptions,
+): Promise<void> {
+	const indexPath =
+		options?.docsRoutePath ?? defaultOpenApiOptions.docsRoutePath;
 
-	fastify.get(indexPath, {schema: {hide: true}}, async (_request: FastifyRequest, reply: FastifyReply) => {
-		const openApiRoutePrefix = options?.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
+	fastify.get(
+		indexPath,
+		{ schema: { hide: true } },
+		async (_request: FastifyRequest, reply: FastifyReply) => {
+			const openApiRoutePrefix =
+				options?.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
 
-		const redocHtml = `
+			const redocHtml = `
             <!doctype html>
             <html>
             <head>
@@ -107,7 +124,7 @@ export async function indexRoute(fastify: FastifyInstance, options?: OpenApiOpti
             </body>
             </html>
             `;
-		await reply.type('text/html; charset=utf-8').send(redocHtml);
-	});
+			await reply.type("text/html; charset=utf-8").send(redocHtml);
+		},
+	);
 }
-

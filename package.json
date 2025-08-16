@@ -5,8 +5,8 @@
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "biome lint --write --vcs-enabled=true --vcs-use-ignore-file=true src test vitest.config.ts && vitest run --coverage",
-    "test:ci": "biome lint --vcs-enabled=true --vcs-use-ignore-file=true src test vitest.config.ts && vitest run --coverage",
+    "test": "biome check --write && vitest run --coverage",
+    "test:ci": "biome check && vitest run --coverage",
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
     "clean": "rimraf ./dist",
     "prepare": "pnpm build"
