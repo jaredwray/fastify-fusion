@@ -1,5 +1,5 @@
 
-import {type FastifyInstance} from 'fastify';
+import type {FastifyInstance} from 'fastify';
 import {fastifyHelmet, type FastifyHelmetOptions} from '@fastify/helmet';
 
 export const defaultFastifyHelmetOptions: FastifyHelmetOptions = {

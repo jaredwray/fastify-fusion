@@ -1,4 +1,4 @@
-import {type FastifyInstance} from 'fastify';
+import type {FastifyInstance} from 'fastify';
 import pino, {type LoggerOptions} from 'pino';
 
 export const defaultLoggingOptions = {

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import {type FastifyInstance} from 'fastify';
+import type {FastifyInstance} from 'fastify';
 import fastifyStatic from '@fastify/static';
 
 export type StaticPath = {

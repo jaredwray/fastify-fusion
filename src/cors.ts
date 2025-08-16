@@ -1,5 +1,5 @@
 
-import {type FastifyInstance} from 'fastify';
+import type {FastifyInstance} from 'fastify';
 import {fastifyCors, type FastifyCorsOptions} from '@fastify/cors';
 
 export const defaultFastifyCorsOptions: FastifyCorsOptions = {

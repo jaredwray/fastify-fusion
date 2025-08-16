@@ -1,4 +1,4 @@
-import {type FastifyInstance, type FastifyRequest, type FastifyReply} from 'fastify';
+import type {FastifyInstance, FastifyRequest, FastifyReply} from 'fastify';
 import {fastifySwagger} from '@fastify/swagger';
 import {fastifySwaggerUi} from '@fastify/swagger-ui';
 import {readPackageUp} from 'read-package-up';

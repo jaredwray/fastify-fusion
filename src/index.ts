@@ -1,4 +1,5 @@
 import process from 'node:process';
+import type {FastifyInstance} from 'fastify';
 
 export type StartOptions = {
 	port?: number;
@@ -12,7 +13,7 @@ export const defaultStartOptions: StartOptions = {
 	message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
 };
 
-export async function start(fastify: any, options: StartOptions = defaultStartOptions): Promise<void> {
+export async function start(fastify: FastifyInstance, options: StartOptions = defaultStartOptions): Promise<void> {
 	try {
 		const portString = process.env.PORT ?? options.port;
 

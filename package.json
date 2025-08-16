@@ -5,8 +5,8 @@
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "xo --fix && vitest run --coverage",
-    "test:ci": "xo && vitest run --coverage",
+    "test": "biome lint --write --vcs-enabled=true --vcs-use-ignore-file=true src test vitest.config.ts && vitest run --coverage",
+    "test:ci": "biome lint --vcs-enabled=true --vcs-use-ignore-file=true src test vitest.config.ts && vitest run --coverage",
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
     "clean": "rimraf ./dist",
     "prepare": "pnpm build"
@@ -28,6 +28,7 @@
   "author": "Jared Wray <me@jaredwray.com>",
   "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
     "@swc/core": "^1.12.11",
     "@types/node": "^24.0.12",
     "@vitest/coverage-v8": "^3.2.4",
@@ -36,8 +37,7 @@
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4",
-    "xo": "^1.1.1"
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "fastify": "^5.3.2"
@@ -56,11 +56,5 @@
   "files": [
     "dist",
     "LICENSE"
-  ],
-  "xo": {
-    "rules": {
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off"
-    }
-  }
+  ]
 }

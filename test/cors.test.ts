@@ -1,6 +1,6 @@
 import {describe, test, expect} from 'vitest';
 import fastify from 'fastify';
-import {type FastifyCorsOptions, defaultFastifyCorsOptions, fuseCors} from '../src/cors.js';
+import {defaultFastifyCorsOptions, fuseCors} from '../src/cors.js';
 
 describe('CORS', async () => {
 	test('should export all modules', async () => {

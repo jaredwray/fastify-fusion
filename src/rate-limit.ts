@@ -1,5 +1,5 @@
 
-import {type FastifyInstance} from 'fastify';
+import type {FastifyInstance} from 'fastify';
 import {fastifyRateLimit, type FastifyRateLimitOptions} from '@fastify/rate-limit';
 
 export const defaultFastifyRateLimitOptions: FastifyRateLimitOptions = {

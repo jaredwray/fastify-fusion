@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import path from 'node:path';
+import type {FastifyInstance} from 'fastify';
 import {type StaticOptions, fuseStatic} from './static.js';
 import {fuseLog, defaultLoggingOptions, type LoggerOptions} from './log.js';
 import {defaultFastifyHelmetOptions, type FastifyHelmetOptions, fuseHelmet} from './helmet.js';
@@ -16,7 +17,7 @@ export type FuseOptions = {
 	openApi?: boolean | OpenApiOptions;
 };
 
-export async function fuse(fastify: any, options?: FuseOptions): Promise<void> {
+export async function fuse(fastify: FastifyInstance, options?: FuseOptions): Promise<void> {
 	// If no options are provided, use the default options
 	options ??= {
 		static: true,

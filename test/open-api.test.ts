@@ -1,6 +1,6 @@
 import process from 'node:process';
 import {
-	describe, test, expect, vi,
+        describe, test, expect,
 } from 'vitest';
 import fastify from 'fastify';
 import type {FuseOptions} from '../src/index.js';
