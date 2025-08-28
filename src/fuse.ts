@@ -2,6 +2,11 @@
 import path from "node:path";
 import type { FastifyInstance } from "fastify";
 import {
+	type CacheableOptions,
+	defaultCacheableOptions,
+	fuseCacheable,
+} from "./cacheable.js";
+import {
 	defaultFastifyCorsOptions,
 	type FastifyCorsOptions,
 	fuseCors,
@@ -27,6 +32,7 @@ export type FuseOptions = {
 	rateLimit?: boolean | FastifyRateLimitOptions;
 	cors?: boolean | FastifyCorsOptions;
 	openApi?: boolean | OpenApiOptions;
+	cache?: boolean | CacheableOptions;
 };
 
 export async function fuse(
@@ -41,6 +47,7 @@ export async function fuse(
 		rateLimit: true,
 		cors: true,
 		openApi: true,
+		cache: true,
 	};
 
 	// Register the logger
@@ -98,5 +105,13 @@ export async function fuse(
 	} else if (options.openApi !== false) {
 		// Register the default open api options if they are not specified
 		await fuseOpenApi(fastify);
+	}
+
+	// Register the cache
+	if (options.cache !== undefined && typeof options.cache !== "boolean") {
+		await fuseCacheable(fastify, options.cache);
+	} else if (options.cache !== false) {
+		// Register the default cache options if they are not specified
+		await fuseCacheable(fastify, defaultCacheableOptions);
 	}
 }

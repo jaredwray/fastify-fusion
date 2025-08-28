@@ -6,6 +6,7 @@ export default defineConfig({
 			exclude: [
 				'dist/**',
 				'vitest.config.ts',
+				'src/types.ts'
 			],
 		},
 	},

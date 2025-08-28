@@ -12,6 +12,7 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 # Features
 - **Fuse** - Easily create a Fastify app with sensible defaults via `fuse()`.
 - **Start** - Easy to start your Fastify app with sensible defaults via `start()`.
+- **Cache** - High-performance layer 1/2 caching with the `cacheable` library integrated as `app.cache`.
 - **OpenAPI** - OpenAPI docs generated using `fastify-swagger` and `scalar` with sensible defaults.
 - **Helmet** - Security headers set using `@fastify/helmet` with sensible defaults.
 - **CORS** - CORS enabled using `@fastify/cors` with sensible defaults for apis.
@@ -25,6 +26,7 @@ Fastify API framework with `best practices` and `plugins` fused together to make
 - [Usage](#usage)
 - [Fuse Options](#fuse-options)
 - [Fastify Start](#fastify-start)
+- [Cache](#cache)
 - [Static Paths](#static-paths)
 - [Logging](#logging)
 - [Helmet](#helmet)
@@ -63,7 +65,8 @@ const fuseOptions: FuseOptions = {
   static: true,
   log: true,
   helmet: false,
-  rateLimit: false
+  rateLimit: false,
+  cache: true
 };
 
 const app = await fuse(app, fuseOptions);
@@ -114,6 +117,10 @@ export type FuseOptions = {
 	static?: boolean | StaticOptions;
 	log?: boolean | LoggerOptions;
 	helmet?: boolean | FastifyHelmetOptions;
+	rateLimit?: boolean | FastifyRateLimitOptions;
+	cors?: boolean | FastifyCorsOptions;
+	openApi?: boolean | OpenApiOptions;
+	cache?: boolean | CacheableOptions;
 };
 ```
 
@@ -154,6 +161,160 @@ const options: StartOptions = {
 };
 start(app, options);
 ```
+
+# Cache
+
+`fastify-fusion` integrates the high-performance `cacheable` library as `app.cache`, providing layer 1/2 caching capabilities with advanced features like statistics, TTL management, and non-blocking operations.
+
+## Default Configuration
+
+```typescript
+export const defaultCacheableOptions: CacheableOptions = {
+	ttl: "1h", // Default 1 hour TTL
+	stats: true, // Enable statistics by default
+	nonBlocking: true, // Non-blocking secondary operations
+};
+```
+
+## Basic Usage
+
+Once fused, the cache is available on your Fastify instance as `app.cache`:
+
+```typescript
+import fastify from 'fastify';
+import { fuse } from 'fastify-fusion';
+
+const app = fastify();
+await fuse(app);
+
+// Use cache in routes
+app.get('/user/:id', async (request, reply) => {
+  const userId = request.params.id;
+  const cacheKey = `user:${userId}`;
+  
+  // Try to get from cache first
+  let user = await request.server.cache.get(cacheKey);
+  
+  if (!user) {
+    // Fetch from database
+    user = await getUserFromDatabase(userId);
+    // Cache for 10 minutes
+    await request.server.cache.set(cacheKey, user, '10m');
+  }
+  
+  return user;
+});
+```
+
+## Configuration Options
+
+You can customize the cache behavior by passing options to the `fuse` function:
+
+```typescript
+import { fuse, FuseOptions } from 'fastify-fusion';
+import fastify from 'fastify';
+
+const app = fastify();
+const options: FuseOptions = {
+  cache: {
+    ttl: '30m', // Default TTL of 30 minutes
+    stats: true, // Enable cache statistics
+    nonBlocking: false, // Blocking secondary operations
+  },
+};
+await fuse(app, options);
+```
+
+You can also disable caching entirely:
+
+```typescript
+const options: FuseOptions = {
+  cache: false, // Disable caching
+};
+```
+
+## Cache Operations
+
+The cache instance provides all the standard caching operations:
+
+```typescript
+// Basic get/set
+await app.cache.set('key', 'value', '1h');
+const value = await app.cache.get('key');
+
+// Bulk operations
+await app.cache.setMany([
+  { key: 'key1', value: 'value1' },
+  { key: 'key2', value: 'value2', ttl: '30m' }
+]);
+const values = await app.cache.getMany(['key1', 'key2']);
+
+// Check existence
+const exists = await app.cache.has('key');
+
+// Delete operations
+await app.cache.delete('key');
+await app.cache.clear(); // Clear all
+
+// Take (get and delete)
+const takenValue = await app.cache.take('key');
+```
+
+## Advanced Features
+
+### Memoization with wrap()
+Automatically cache function results:
+
+```typescript
+const expensiveFunction = app.cache.wrap(async (input) => {
+  // Expensive computation
+  return await processData(input);
+}, { ttl: '1h' });
+
+// First call computes and caches
+const result1 = await expensiveFunction('test');
+// Second call returns cached result
+const result2 = await expensiveFunction('test');
+```
+
+### GetOrSet Pattern
+Fetch from cache or compute and store:
+
+```typescript
+const posts = await app.cache.getOrSet('all-posts', async () => {
+  return await fetchPostsFromAPI();
+}, { ttl: '5m' });
+```
+
+### Cache Statistics
+Monitor cache performance when stats are enabled:
+
+```typescript
+app.get('/cache/stats', async (request, reply) => {
+  return {
+    hits: app.cache.stats.hits,
+    misses: app.cache.stats.misses,
+    gets: app.cache.stats.gets,
+    sets: app.cache.stats.sets,
+    count: app.cache.stats.count
+  };
+});
+```
+
+### TTL Formats
+The cache supports both milliseconds and human-readable time formats:
+
+```typescript
+// Milliseconds
+await app.cache.set('key', 'value', 3600000); // 1 hour
+
+// Human-readable
+await app.cache.set('key', 'value', '1h');    // 1 hour
+await app.cache.set('key', 'value', '30m');   // 30 minutes
+await app.cache.set('key', 'value', '15s');   // 15 seconds
+```
+
+The cache automatically handles cleanup and provides graceful shutdown when your Fastify server closes.
 
 # Static Paths
 
