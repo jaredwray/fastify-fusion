@@ -5,8 +5,9 @@
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "biome check --write && vitest run --coverage",
-    "test:ci": "biome check && vitest run --coverage",
+    "lint": "biome check --write --error-on-warnings",
+    "test": "pnpm lint && vitest run --coverage",
+    "test:ci": "biome check --error-on-warnings && vitest run --coverage",
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
     "clean": "rimraf ./dist",
     "prepare": "pnpm build"
