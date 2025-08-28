@@ -135,4 +135,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 pnpm-lock.yaml
+
+# Apple
 .DS_Store
+
+# AI
+.claude

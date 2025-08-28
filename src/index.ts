@@ -47,6 +47,11 @@ export async function start(
 	}
 }
 
+export {
+	type CacheableOptions,
+	defaultCacheableOptions,
+	fuseCacheable,
+} from "./cacheable.js";
 export { type FuseOptions, fuse } from "./fuse.js";
 export {
 	defaultFastifyHelmetOptions,
@@ -67,3 +72,4 @@ export {
 } from "./rate-limit.js";
 export type { StaticOptions, StaticPath } from "./static.js";
 export { fuseStatic } from "./static.js";
+import "./types.js";
