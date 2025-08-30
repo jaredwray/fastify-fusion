@@ -516,14 +516,23 @@ export const defaultFastifyCorsOptions: FastifyCorsOptions = {
 You can customize the OpenAPI options by passing in an `OpenApiOptions` object to the `fuse` function. Here is an example of how to customize the OpenAPI options:
 
 ```typescript
+export type OpenApiOptions = {
+	title?: string;
+	description?: string;
+	version?: string;
+	openApiRoutePrefix?: string;
+	docsRoutePath?: string;
+};
+```
+
+```typescript
 import { fuse, FuseOptions } from 'fastify-fusion';
 import Fastify from 'fastify';
 const app = Fastify();
 const options: FuseOptions = {
   openApi: {
 	openApiRoutePrefix: '/api-docs', // Change the OpenAPI JSON route prefix
-	docsPrefix: '/docs', // Change the OpenAPI docs route prefix
-	docsUxPrefix: '/docs-ux', // Change the Scalar UX route prefix
+	docsRoutePath: '/docs', // Change the OpenAPI docs route prefix
   },
 };
 await fuse(app, options);

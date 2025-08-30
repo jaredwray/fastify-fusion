@@ -101,6 +101,7 @@ export async function indexRoute(
 		indexPath,
 		{ schema: { hide: true } },
 		async (_request: FastifyRequest, reply: FastifyReply) => {
+			const title = options?.title ?? defaultOpenApiOptions.title;
 			const openApiRoutePrefix =
 				options?.openApiRoutePrefix ?? defaultOpenApiOptions.openApiRoutePrefix;
 
@@ -108,7 +109,7 @@ export async function indexRoute(
             <!doctype html>
             <html>
             <head>
-              <title>Hyphen Notifyr</title>
+              <title>${title}</title>
               <meta charset="utf-8" />
               <meta
                 name="viewport"
