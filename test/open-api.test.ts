@@ -55,6 +55,7 @@ describe("Open API", () => {
 		const app = fastify();
 		const options: FuseOptions = {
 			openApi: {
+				title: "My API",
 				docsRoutePath: "/docs",
 			},
 		};
@@ -74,6 +75,7 @@ describe("Open API", () => {
 		expect(response.statusCode).toBe(200);
 		expect(response.headers["content-type"]).toBe("text/html; charset=utf-8");
 		expect(response.body).toContain('data-url="/openapi/json"');
+		expect(response.body).toContain("My API");
 
 		expect(openApiResponse.statusCode).toBe(200);
 		expect(openApiResponse.headers["content-type"]).toBe(
