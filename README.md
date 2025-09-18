@@ -5,7 +5,7 @@
 [![tests](https://github.com/jaredwray/fastify-fusion/actions/workflows/tests.yaml/badge.svg)](https://github.com/jaredwray/fastify-fusion/actions/workflows/tests.yaml)
 [![npm](https://img.shields.io/npm/v/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
 [![npm](https://img.shields.io/npm/dm/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
-[![license](https://img.shields.io/github/license/jaredwray/cacheable)](https://github.com/jaredwray/fastify-fusion/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/jaredwray/fastify-fusion)](https://github.com/jaredwray/fastify-fusion/blob/main/LICENSE)
 
 Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.
 
