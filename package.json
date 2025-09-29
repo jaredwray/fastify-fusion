@@ -50,7 +50,7 @@
     "@fastify/static": "^8.2.0",
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
-    "cacheable": "^1.10.4",
+    "cacheable": "^2.0.2",
     "pino": "^9.12.0",
     "pino-pretty": "^13.1.1",
     "read-package-up": "^11.0.0"
