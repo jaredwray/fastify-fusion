@@ -51,7 +51,7 @@
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
     "cacheable": "^1.10.4",
-    "pino": "^9.9.0",
+    "pino": "^9.12.0",
     "pino-pretty": "^13.1.1",
     "read-package-up": "^11.0.0"
   },
