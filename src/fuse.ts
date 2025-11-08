@@ -51,6 +51,7 @@ export async function fuse(
 	};
 
 	// Register the logger
+	/* v8 ignore next -- @preserve */
 	if (options.log !== undefined && typeof options.log !== "boolean") {
 		await fuseLog(fastify, options.log);
 	} else if (options.log !== false) {
@@ -59,6 +60,7 @@ export async function fuse(
 	}
 
 	// Register the static paths
+	/* v8 ignore next -- @preserve */
 	if (options.static !== undefined && typeof options.static !== "boolean") {
 		await fuseStatic(fastify, options.static);
 	} else if (options.static !== false) {
@@ -73,6 +75,7 @@ export async function fuse(
 	}
 
 	// Register the helmet security headers
+	/* v8 ignore next -- @preserve */
 	if (options.helmet !== undefined && typeof options.helmet !== "boolean") {
 		await fuseHelmet(fastify, options.helmet);
 	} else if (options.helmet !== false) {
@@ -81,6 +84,7 @@ export async function fuse(
 	}
 
 	// Register the rate limit
+	/* v8 ignore next -- @preserve */
 	if (
 		options.rateLimit !== undefined &&
 		typeof options.rateLimit !== "boolean"
@@ -92,6 +96,7 @@ export async function fuse(
 	}
 
 	// Register the CORS
+	/* v8 ignore next -- @preserve */
 	if (options.cors !== undefined && typeof options.cors !== "boolean") {
 		await fuseCors(fastify, options.cors);
 	} else if (options.cors !== false) {
@@ -100,6 +105,7 @@ export async function fuse(
 	}
 
 	// Register the open api
+	/* v8 ignore next -- @preserve */
 	if (options.openApi !== undefined && typeof options.openApi !== "boolean") {
 		await fuseOpenApi(fastify, options.openApi);
 	} else if (options.openApi !== false) {

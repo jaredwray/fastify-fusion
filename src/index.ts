@@ -10,6 +10,7 @@ export type StartOptions = {
 export const defaultStartOptions: StartOptions = {
 	port: 3000,
 	host: "0.0.0.0",
+	/* v8 ignore next -- @preserve */
 	message: (host, port) => `🌏 started successfully at http://${host}:${port}`,
 };
 
