@@ -1,6 +1,6 @@
 {
   "name": "fastify-fusion",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "type": "module",
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
   "main": "dist/index.js",
