@@ -10,7 +10,7 @@
     "test": "pnpm lint && vitest run --coverage",
     "test:ci": "biome check --error-on-warnings && vitest run --coverage",
     "build": "rimraf ./dist && tsup src/index.ts --format esm,cjs --dts --clean",
-    "clean": "rimraf ./dist ./site/dist",
+    "clean": "rimraf ./dist ./site/dist ./site/.cache",
     "website:build": "docula build",
     "website:serve": "docula serve",
     "website:dev": "docula dev",
