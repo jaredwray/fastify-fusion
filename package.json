@@ -2,6 +2,7 @@
   "name": "fastify-fusion",
   "version": "1.4.5",
   "type": "module",
+  "packageManager": "pnpm@11.6.0",
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
   "main": "dist/index.js",
   "scripts": {
@@ -28,6 +29,9 @@
   ],
   "author": "Jared Wray <me@jaredwray.com>",
   "license": "MIT",
+  "engines": {
+    "node": "^22.18.0"
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
     "@types/node": "^25.3.5",
