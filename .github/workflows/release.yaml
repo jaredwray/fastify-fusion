@@ -32,8 +32,5 @@ jobs:
     - name: Testing
       run: pnpm test
 
-    - name: Update npm
-      run: npm install -g npm@latest
-
     - name: Publish
-      run: npm publish --provenance --ignore-scripts
+      run: pnpm publish --provenance --no-git-checks --ignore-scripts
