@@ -1,0 +1,36 @@
+:root,
+[data-theme="light"] {
+	--bg: #ffffff;
+	--fg: #1a1a1a;
+	--border: rgba(0, 0, 0, 0.1);
+	--border-strong: rgba(0, 0, 0, 0.15);
+	--border-hover: rgba(0, 116, 174, 0.5);
+	--surface: #f1f6f9;
+	--surface-hover: rgba(0, 116, 174, 0.08);
+	--muted: #6b7280;
+	--muted-fg: rgba(0, 0, 0, 0.5);
+	--code-bg: rgba(0, 116, 174, 0.08);
+	--pre-bg: rgba(0, 116, 174, 0.05);
+	--link: #0074ae;
+	--scrollbar: rgba(0, 0, 0, 0.2);
+}
+
+:root {
+	--header-height: 81px;
+}
+
+[data-theme="dark"] {
+	--bg: #0f1419;
+	--fg: #f5f7fa;
+	--border: rgba(255, 255, 255, 0.1);
+	--border-strong: rgba(255, 255, 255, 0.2);
+	--border-hover: rgba(75, 178, 224, 0.5);
+	--surface: #161d24;
+	--surface-hover: rgba(75, 178, 224, 0.12);
+	--muted: #c5cdd3;
+	--muted-fg: rgba(255, 255, 255, 0.65);
+	--code-bg: rgba(75, 178, 224, 0.12);
+	--pre-bg: rgba(75, 178, 224, 0.08);
+	--link: #4bb2e0;
+	--scrollbar: rgba(255, 255, 255, 0.2);
+}

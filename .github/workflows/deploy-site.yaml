@@ -1,0 +1,39 @@
+name: deploy-site
+
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+    - uses: pnpm/action-setup@v6
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+
+    - name: Install Dependencies
+      run: pnpm install
+
+    - name: Build Website
+      run: pnpm website:build
+      env:
+        # Used by docula to read releases (changelog) and contributors without
+        # hitting the anonymous GitHub API rate limit. Provided automatically.
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to Cloudflare Pages
+      uses: cloudflare/wrangler-action@v4
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: pages deploy site/dist --project-name=fastify-fusion --branch=main
