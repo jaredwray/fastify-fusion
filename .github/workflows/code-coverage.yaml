@@ -17,13 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 24
 
     - name: Install Dependencies
-      run: npm install pnpm -g && pnpm install
+      run: pnpm install
 
     - name: Build    
       run: pnpm build
