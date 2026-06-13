@@ -32,6 +32,14 @@
   ],
   "author": "Jared Wray <me@jaredwray.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaredwray/fastify-fusion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaredwray/fastify-fusion/issues"
+  },
+  "homepage": "https://github.com/jaredwray/fastify-fusion#readme",
   "engines": {
     "node": "^22.18.0"
   },
