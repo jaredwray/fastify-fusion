@@ -1,6 +1,6 @@
 {
   "name": "fastify-fusion",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "packageManager": "pnpm@11.6.0",
   "description": "Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.",
