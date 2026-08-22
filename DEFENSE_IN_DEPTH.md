@@ -38,11 +38,11 @@ Profile: npm library · public
 
 ## 5. npm publishing — npm libraries only
 
-- [ ] OIDC trusted publishing configured **stage-only** on npmjs.com for the publish workflow — it can stage, never publish live (manual)
+- [x] OIDC trusted publishing configured **stage-only** on npmjs.com for the publish workflow — it can stage, never publish live — maintainer-confirmed 2026-08-22
 - [x] `.github/workflows/release.yaml` packs then stages with `pnpm stage publish ./packed/*.tgz --access public --provenance --no-git-checks` — PR #105
-- [ ] Maintainer promotes staged versions with 2FA (manual)
-- [ ] Drydock connected — staged releases reviewed before promotion (manual)
-- [ ] No direct publish rights: package requires 2FA and disallows tokens (manual)
+- [x] Maintainer promotes staged versions with 2FA — maintainer-confirmed 2026-08-22
+- [x] Drydock connected — staged releases reviewed before promotion — maintainer-confirmed 2026-08-22
+- [x] No direct publish rights: package requires 2FA and disallows tokens — maintainer-confirmed 2026-08-22
 - [x] `package.json` `repository.url` accurate so provenance maps to this repo — verified
 
 ## 6. Security tooling
@@ -54,5 +54,5 @@ Profile: npm library · public
 ## 7. Repository lockdown
 
 - [x] `lockdown-repo.sh` applied 2026-08-22 by a repo admin (`--required-checks "test,zizmor"`; `--allowed-actions` GitHub-owned + verified + `zizmorcore/*,SocketDev/*,codecov/*,cloudflare/*`). Settings in place: PRs required on `main`, merges blocked unless those checks pass, tag ruleset (admins only), immutable releases, fork-PR approval, read-only workflow tokens, Actions allowlist, secret scanning + push protection, Dependabot disabled, private vulnerability reporting. `--check` from this cloud agent still 403s (`You are admin: false`); the apply log is the source of truth.
-- [ ] Phishing-resistant 2FA (passkeys / hardware keys) on the GitHub and npm accounts (manual)
-- [ ] Recovery codes stored offline in a password manager (manual)
+- [x] Phishing-resistant 2FA (passkeys / hardware keys) on the GitHub and npm accounts — maintainer-confirmed 2026-08-22
+- [x] Recovery codes stored offline in a password manager — maintainer-confirmed 2026-08-22
