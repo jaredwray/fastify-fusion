@@ -9,20 +9,35 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-
+  setup-build-deploy:
+    name: Deploy Website
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v7
-    - uses: pnpm/action-setup@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - name: Install Socket Firewall
+      uses: SocketDev/action@ba6de6cc0565af1f42295590380973573297e31f # v1.3.2
+      with:
+        mode: firewall-free
+        firewall-version: "1.15.0"
     - name: Use Node.js
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 24
+        package-manager-cache: false
+
+    - name: Enable Corepack
+      run: |
+        unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy ALL_PROXY all_proxy
+        corepack enable && corepack prepare
 
     - name: Install Dependencies
-      run: pnpm install
+      run: sfw pnpm install --frozen-lockfile
+
+    - name: Build
+      run: pnpm build
 
     - name: Build Website
       run: pnpm website:build
@@ -34,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
     - name: Publish to Cloudflare Pages
-      uses: cloudflare/wrangler-action@v4
+      uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
