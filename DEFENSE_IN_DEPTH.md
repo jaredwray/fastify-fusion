@@ -6,21 +6,21 @@ Profile: npm library · public
 
 ## 1. Security docs
 
-- [ ] `SECURITY.md` present — contact info + "How this repository is secured" summary (PR #103 pending)
-- [ ] `DEFENSE_IN_DEPTH.md` present (this file) (PR #103 pending)
+- [x] `SECURITY.md` present — contact info + "How this repository is secured" summary — PR #103
+- [x] `DEFENSE_IN_DEPTH.md` present (this file) — PR #103
 
 ## 2. CODEOWNERS and cloud bootstrap
 
-- [ ] `.github/CODEOWNERS` covers `/.github/`, `/.cursor/`, `/.devcontainer/`, `/scripts/` with owners the maintainer names (PR #103 pending)
-- [ ] Codespaces and Cursor Cloud Agents bootstrap Aikido Safe Chain via scripts/setup-cloud-environment.sh (--ci shims, frozen lockfile) (PR #103 pending)
+- [x] `.github/CODEOWNERS` covers `/.github/`, `/.cursor/`, `/.devcontainer/`, `/scripts/` with owners the maintainer names — PR #103
+- [x] Codespaces and Cursor Cloud Agents bootstrap Aikido Safe Chain via scripts/setup-cloud-environment.sh (--ci shims, frozen lockfile) — PR #103
 
 ## 3. Dependencies (pnpm)
 
 - [x] `packageManager: pnpm@11.3+` pinned in `package.json` — verified `pnpm@11.6.0`
-- [ ] 7-day cooldown: `minimumReleaseAge: 10080`, `minimumReleaseAgeStrict: true`, `minimumReleaseAgeIgnoreMissingTime: false`; no first-party `minimumReleaseAgeExclude`
-- [ ] `trustPolicy: no-downgrade`; no first-party `trustPolicyExclude`
-- [ ] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline
-- [ ] `blockExoticSubdeps: true`
+- [ ] 7-day cooldown: `minimumReleaseAge: 10080`, `minimumReleaseAgeStrict: true`, `minimumReleaseAgeIgnoreMissingTime: false`; no first-party `minimumReleaseAgeExclude` (PR #104 pending)
+- [ ] `trustPolicy: no-downgrade`; no first-party `trustPolicyExclude` (PR #104 pending)
+- [ ] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline (PR #104 pending)
+- [ ] `blockExoticSubdeps: true` (PR #104 pending)
 - [ ] Lockfile committed; CI installs with `pnpm install --frozen-lockfile`
 - [x] No `.github/dependabot.yml`; other dependency-update tools (if any) open PRs only — never auto-merge — verified
 
@@ -47,7 +47,7 @@ Profile: npm library · public
 
 ## 6. Security tooling
 
-- [ ] Aikido runs on every build
+- [x] Aikido runs on every build — verified (Aikido Security GitHub app on pull requests)
 - [ ] Aikido release gate: the release workflow's stage-publish job `needs:` a passing `scan-release`
 - [x] Socket reviews every PR that changes dependencies — verified (Socket Security GitHub app on pull requests)
 
