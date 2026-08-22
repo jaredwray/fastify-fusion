@@ -1,8 +1,20 @@
-minimumReleaseAge: 1440
+minimumReleaseAge: 10080 # 7 days, in minutes
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+blockExoticSubdeps: true
+strictDepBuilds: true
+dangerouslyAllowAllBuilds: false
+trustPolicy: no-downgrade
+
+# Pin transitive versions that fail no-downgrade (later publish, weaker trust)
+# rather than excluding them. writr is first-party — must not be excluded.
+overrides:
+  writr: 6.1.5
+  pino: 10.3.1
+  chokidar: 5.0.0
+  semver@5: 7.8.5
+  slow-redact: 0.3.1
+
 allowBuilds:
-  '@swc/core': true
+  "@swc/core": true
   esbuild: true
-  sharp: true
-  unrs-resolver: true
-  vue-demi: true
-  workerd: true
