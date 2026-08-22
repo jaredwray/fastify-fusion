@@ -21,25 +21,25 @@ Profile: npm library · public
 - [x] `trustPolicy: no-downgrade`; no first-party `trustPolicyExclude` — PR #104
 - [x] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline — PR #104 (third-party `allowBuilds` exceptions: `@swc/core`, esbuild)
 - [x] `blockExoticSubdeps: true` — PR #104
-- [ ] Lockfile committed; CI installs with `pnpm install --frozen-lockfile` (PR #105 pending)
+- [x] Lockfile committed; CI installs with `pnpm install --frozen-lockfile` (via `sfw pnpm install --frozen-lockfile`) — PR #105
 - [x] No `.github/dependabot.yml`; other dependency-update tools (if any) open PRs only — never auto-merge — verified
 
 ## 4. GitHub Actions
 
-- [ ] `permissions: contents: read` (or `{}` + per-job grants) on every workflow (PR #105 pending)
-- [ ] No `contents: write` except jobs whose purpose is mutating the repo (GitHub Release, Changesets version PR); generated output is a workflow artifact, never committed back from CI (PR #105 pending)
-- [ ] Every action pinned to a full commit SHA (`npx actions-up`) (PR #105 pending)
-- [ ] Every job installs Socket Firewall (`SocketDev/action` SHA-pinned, `firewall-version` pinned); `pnpm install` / `npm install` run as `sfw pnpm install` / `sfw npm install` (PR #105 pending)
-- [ ] `.github/workflows/check-workflows.yaml` lints workflows with zizmor on every PR (PR #105 pending)
-- [ ] `persist-credentials: false` on checkouts that don't push (PR #105 pending)
+- [x] `permissions: contents: read` (or `{}` + per-job grants) on every workflow — PR #105
+- [x] No `contents: write` except jobs whose purpose is mutating the repo (GitHub Release, Changesets version PR); generated output is a workflow artifact, never committed back from CI — PR #105
+- [x] Every action pinned to a full commit SHA (`npx actions-up`) — PR #105
+- [x] Every job installs Socket Firewall (`SocketDev/action` SHA-pinned, `firewall-version` pinned); `pnpm install` / `npm install` run as `sfw pnpm install` / `sfw npm install` — PR #105
+- [x] `.github/workflows/check-workflows.yaml` lints workflows with zizmor on every PR — PR #105
+- [x] `persist-credentials: false` on checkouts that don't push — PR #105
 - [x] No `pull_request_target` on workflows that run untrusted PR code — verified
-- [ ] Artifact-publishing workflows disable `actions/setup-node` default caching (`package-manager-cache: false`) to prevent cache poisoning (PR #105 pending)
+- [x] Artifact-publishing workflows disable `actions/setup-node` default caching (`package-manager-cache: false`) to prevent cache poisoning — PR #105
 - [x] No npm tokens (or other registry credentials) in Actions secrets — verified (no npm/registry tokens in workflow YAML; publish uses OIDC `id-token`)
 
 ## 5. npm publishing — npm libraries only
 
 - [ ] OIDC trusted publishing configured **stage-only** on npmjs.com for the publish workflow — it can stage, never publish live (manual)
-- [ ] `.github/workflows/release.yaml` packs then stages with `pnpm stage publish ./packed/*.tgz --no-git-checks` (PR #105 pending)
+- [x] `.github/workflows/release.yaml` packs then stages with `pnpm stage publish ./packed/*.tgz --access public --provenance --no-git-checks` — PR #105
 - [ ] Maintainer promotes staged versions with 2FA (manual)
 - [ ] Drydock connected — staged releases reviewed before promotion (manual)
 - [ ] No direct publish rights: package requires 2FA and disallows tokens (manual)
@@ -48,11 +48,11 @@ Profile: npm library · public
 ## 6. Security tooling
 
 - [x] Aikido runs on every build — verified (Aikido Security GitHub app on pull requests)
-- [ ] Aikido release gate: the release workflow's stage-publish job `needs:` a passing `scan-release` (PR #105 pending)
+- [x] Aikido release gate: the release workflow's stage-publish job `needs:` a passing `scan-release` — PR #105
 - [x] Socket reviews every PR that changes dependencies — verified (Socket Security GitHub app on pull requests)
 
 ## 7. Repository lockdown
 
-- [ ] `lockdown-repo.sh` applied; `--check` with `--required-checks` and `--allowed-actions` passes (PRs required on the default branch, merges blocked unless required status checks pass, tag ruleset, immutable releases, fork-PR approval (public repos), read-only workflow tokens, Actions allowlist, secret scanning, Dependabot disabled, private vulnerability reporting (public repos))
+- [x] `lockdown-repo.sh` applied 2026-08-22 by a repo admin (`--required-checks "test,zizmor"`; `--allowed-actions` GitHub-owned + verified + `zizmorcore/*,SocketDev/*,codecov/*,cloudflare/*`). Settings in place: PRs required on `main`, merges blocked unless those checks pass, tag ruleset (admins only), immutable releases, fork-PR approval, read-only workflow tokens, Actions allowlist, secret scanning + push protection, Dependabot disabled, private vulnerability reporting. `--check` from this cloud agent still 403s (`You are admin: false`); the apply log is the source of truth.
 - [ ] Phishing-resistant 2FA (passkeys / hardware keys) on the GitHub and npm accounts (manual)
 - [ ] Recovery codes stored offline in a password manager (manual)
