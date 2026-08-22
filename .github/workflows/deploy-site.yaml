@@ -31,6 +31,12 @@ jobs:
     - name: Enable Corepack
       run: |
         unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy ALL_PROXY all_proxy
+        # Node ≥25 no longer ships Corepack. Install it when missing so the
+        # Node 26 matrix (and future runners) still resolve packageManager.
+        if ! command -v corepack >/dev/null; then
+          # zizmor: ignore[adhoc-packages] official Corepack when Node omits it
+          sfw npm install --global corepack
+        fi
         corepack enable && corepack prepare
 
     - name: Install Dependencies
