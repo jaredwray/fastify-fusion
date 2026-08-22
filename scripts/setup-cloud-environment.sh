@@ -43,7 +43,9 @@ export PATH="${SAFE_CHAIN_SHIMS}:${SAFE_CHAIN_BIN}:${PATH}"
 persist_shim_path() {
   local rc="$1"
   local line="export PATH=\"${SAFE_CHAIN_SHIMS}:${SAFE_CHAIN_BIN}:\$PATH\""
-  if [[ -f "$rc" ]] && grep -Fq ".safe-chain/shims" "$rc"; then
+  # Require the exact active export (shims first). A comment, stale PATH,
+  # or any other mention of the shim dir is not enough.
+  if [[ -f "$rc" ]] && grep -Fxq "$line" "$rc"; then
     return 0
   fi
   mkdir -p "$(dirname "$rc")"
@@ -55,8 +57,9 @@ persist_shim_path "${HOME}/.bashrc"
 persist_shim_path "${HOME}/.zshrc"
 
 if [[ -n "${GITHUB_PATH:-}" ]]; then
-  printf '%s\n' "$SAFE_CHAIN_SHIMS" >> "$GITHUB_PATH"
+  # GITHUB_PATH entries are prepended; the last line wins PATH precedence.
   printf '%s\n' "$SAFE_CHAIN_BIN" >> "$GITHUB_PATH"
+  printf '%s\n' "$SAFE_CHAIN_SHIMS" >> "$GITHUB_PATH"
 fi
 
 pnpm safe-chain-verify
