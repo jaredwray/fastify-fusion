@@ -11,7 +11,6 @@ trustPolicy: no-downgrade
 overrides:
   chokidar: 5.0.0
   semver@5: 7.8.5
-  slow-redact: 0.3.1
 
 allowBuilds:
   "@swc/core": true
