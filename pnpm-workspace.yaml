@@ -9,7 +9,6 @@ trustPolicy: no-downgrade
 # Pin transitive versions that fail no-downgrade (later publish, weaker trust)
 # rather than excluding them.
 overrides:
-  pino: 10.3.1
   chokidar: 5.0.0
   semver@5: 7.8.5
   slow-redact: 0.3.1
