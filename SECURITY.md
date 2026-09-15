@@ -24,6 +24,7 @@ This repository follows the [defense-in-depth](https://github.com/jaredwray/agen
 hardening checklist; progress is tracked in [DEFENSE_IN_DEPTH.md](./DEFENSE_IN_DEPTH.md). Measures currently in place:
 
 - Codespaces and Cursor Cloud Agents install through Aikido Safe Chain; package-manager shims must not be bypassed.
+- The Codespaces Dev Container image is pinned by digest (`name:<tag>@sha256:<digest>`), not a floating tag.
 - Dependencies install through pnpm with a 7-day cooldown on new versions, lifecycle scripts blocked by default, and `trustPolicy: no-downgrade`. Socket reviews every dependency change; Aikido scans every build.
 - Pull requests are required to merge to `main`; CODEOWNERS reviews cannot be bypassed. Workflow tokens are read-only. Fork PRs require owner approval before workflows run. Actions are limited to GitHub-owned, verified, and an explicit allowlist (`zizmorcore/*`, `SocketDev/*`, `codecov/*`, `cloudflare/*`).
 - Tags can be created only by admins; GitHub Releases are immutable. Secret scanning and push protection are on; private vulnerability reporting is enabled.
