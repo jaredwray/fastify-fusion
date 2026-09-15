@@ -11,8 +11,9 @@ Profile: npm library · public
 
 ## 2. CODEOWNERS and cloud bootstrap
 
-- [x] `.github/CODEOWNERS` covers `/.github/`, `/.cursor/`, `/.devcontainer/`, `/scripts/` with owners the maintainer names — PR #103
+- [x] `.github/CODEOWNERS` covers `/.github/`, `/.vscode/`, `/.cursor/`, `/.devcontainer/`, `/scripts/` with owners the maintainer names — PR #117
 - [x] Codespaces and Cursor Cloud Agents bootstrap Aikido Safe Chain via scripts/setup-cloud-environment.sh (--ci shims, frozen lockfile) — PR #103
+- [x] Dev Container `image` pinned by digest (`name:<tag>@sha256:<digest>`; not a floating tag) — PR #115
 
 ## 3. Dependencies (pnpm)
 
@@ -21,7 +22,7 @@ Profile: npm library · public
 - [x] `trustPolicy: no-downgrade`; no first-party `trustPolicyExclude` — PR #104
 - [x] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline — PR #104 (third-party `allowBuilds` exceptions: `@swc/core`, esbuild)
 - [x] `blockExoticSubdeps: true` — PR #104
-- [x] Lockfile committed; CI installs with `pnpm install --frozen-lockfile` (via `sfw pnpm install --frozen-lockfile`) — PR #105
+- [x] Lockfile committed; CI installs with `pnpm install --frozen-lockfile` — PR #105
 - [x] No `.github/dependabot.yml`; other dependency-update tools (if any) open PRs only — never auto-merge — verified
 
 ## 4. GitHub Actions
@@ -31,6 +32,7 @@ Profile: npm library · public
 - [x] Every action pinned to a full commit SHA (`npx actions-up`) — PR #105
 - [x] Every job installs Socket Firewall (`SocketDev/action` SHA-pinned, `firewall-version` pinned); `pnpm install` / `npm install` run as `sfw pnpm install` / `sfw npm install` — PR #105
 - [x] `.github/workflows/check-workflows.yaml` lints workflows with zizmor on every PR — PR #105
+- [ ] Workflow `name:` and job `name:` contain no spaces (kebab-case) so they can be set as required status checks
 - [x] `persist-credentials: false` on checkouts that don't push — PR #105
 - [x] No `pull_request_target` on workflows that run untrusted PR code — verified
 - [x] Artifact-publishing workflows disable `actions/setup-node` default caching (`package-manager-cache: false`) to prevent cache poisoning — PR #105
@@ -38,11 +40,11 @@ Profile: npm library · public
 
 ## 5. npm publishing — npm libraries only
 
-- [x] OIDC trusted publishing configured **stage-only** on npmjs.com for the publish workflow — it can stage, never publish live — maintainer-confirmed 2026-08-22
-- [x] `.github/workflows/release.yaml` packs then stages with `pnpm stage publish ./packed/*.tgz --access public --provenance --no-git-checks` — PR #105
-- [x] Maintainer promotes staged versions with 2FA — maintainer-confirmed 2026-08-22
-- [x] Drydock connected — staged releases reviewed before promotion — maintainer-confirmed 2026-08-22
-- [x] No direct publish rights: package requires 2FA and disallows tokens — maintainer-confirmed 2026-08-22
+- [x] OIDC trusted publishing configured **stage-only** on npmjs.com for the publish workflow — it can stage, never publish live (manual) — maintainer-confirmed 2026-08-22
+- [x] `.github/workflows/release.yaml` packs then stages with `pnpm stage publish ./packed/*.tgz --no-git-checks` — PR #105
+- [x] Maintainer promotes staged versions with 2FA (manual) — maintainer-confirmed 2026-08-22
+- [x] Drydock connected — staged releases reviewed before promotion (manual) — maintainer-confirmed 2026-08-22
+- [x] No direct publish rights: package requires 2FA and disallows tokens (manual) — maintainer-confirmed 2026-08-22
 - [x] `package.json` `repository.url` accurate so provenance maps to this repo — verified
 
 ## 6. Security tooling
@@ -53,6 +55,6 @@ Profile: npm library · public
 
 ## 7. Repository lockdown
 
-- [x] `lockdown-repo.sh` applied 2026-08-22 by a repo admin (`--required-checks "test,zizmor"`; `--allowed-actions` GitHub-owned + verified + `zizmorcore/*,SocketDev/*,codecov/*,cloudflare/*`). Settings in place: PRs required on `main`, merges blocked unless those checks pass, tag ruleset (admins only), immutable releases, fork-PR approval, read-only workflow tokens, Actions allowlist, secret scanning + push protection, Dependabot disabled, private vulnerability reporting. `--check` from this cloud agent still 403s (`You are admin: false`); the apply log is the source of truth.
-- [x] Phishing-resistant 2FA (passkeys / hardware keys) on the GitHub and npm accounts — maintainer-confirmed 2026-08-22
-- [x] Recovery codes stored offline in a password manager — maintainer-confirmed 2026-08-22
+- [x] Phishing-resistant 2FA (passkeys / hardware keys) on the GitHub and npm accounts (manual) — maintainer-confirmed 2026-08-22
+- [x] Recovery codes stored offline in a password manager (manual) — maintainer-confirmed 2026-08-22
+- [x] `lockdown-repo.sh` applied by a repo admin (never committed to this repo); `--check` with `--required-checks` and `--allowed-actions` passes (PRs required on the default branch, merges blocked unless required status checks pass, tag ruleset, immutable releases, fork-PR approval (public repos), read-only workflow tokens, Actions allowlist, secret scanning, Dependabot disabled, private vulnerability reporting (public repos)) — applied 2026-08-22 (`--required-checks "test,zizmor"`; `--allowed-actions` GitHub-owned + verified + `zizmorcore/*,SocketDev/*,codecov/*,cloudflare/*`). `--check` from this cloud agent still 403s (`You are admin: false`); the apply log is the source of truth.
