@@ -21,8 +21,15 @@ if [[ ! -f pnpm-lock.yaml ]]; then
   exit 1
 fi
 
-if [[ -f package.json ]] && grep -q '"packageManager"' package.json && command -v corepack >/dev/null; then
-  corepack enable
+# javascript-node images own /usr/local/bin as root. Install Corepack's pnpm
+# shim into ~/.safe-chain/bin so it does not EACCES, and only when pnpm is missing.
+if ! command -v pnpm >/dev/null \
+  && [[ -f package.json ]] \
+  && grep -q '"packageManager"' package.json \
+  && command -v corepack >/dev/null; then
+  mkdir -p "$SAFE_CHAIN_BIN"
+  corepack enable --install-directory "$SAFE_CHAIN_BIN" pnpm
+  export PATH="${SAFE_CHAIN_BIN}:${PATH}"
 fi
 
 if ! command -v pnpm >/dev/null; then
@@ -36,7 +43,12 @@ trap 'rm -f "$installer"' EXIT
 curl -fsSL "$SAFE_CHAIN_INSTALLER_URL" -o "$installer"
 echo "${SAFE_CHAIN_INSTALLER_SHA256}  ${installer}" | sha256sum -c -
 
-sh "$installer" --ci
+# NVM auto-selects from the current directory when sourced. Run outside the
+# repository so .nvmrc cannot break the installer's optional legacy scan.
+(
+  cd /
+  sh "$installer" --ci
+)
 
 export PATH="${SAFE_CHAIN_SHIMS}:${SAFE_CHAIN_BIN}:${PATH}"
 
