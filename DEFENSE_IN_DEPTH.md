@@ -12,7 +12,7 @@ Profile: npm library · public
 ## 2. CODEOWNERS and cloud bootstrap
 
 - [x] `.github/CODEOWNERS` covers `/.github/`, `/.vscode/`, `/.cursor/`, `/.devcontainer/`, `/scripts/` with owners the maintainer names — PR #117
-- [x] Codespaces and Cursor Cloud Agents bootstrap Aikido Safe Chain via scripts/setup-cloud-environment.sh (--ci shims, frozen lockfile) — PR #103, refreshed PR #119; Codespaces `github-cli` + `docker-in-docker` features (PR # pending)
+- [x] Codespaces and Cursor Cloud Agents bootstrap Aikido Safe Chain via scripts/setup-cloud-environment.sh (--ci shims, frozen lockfile) — PR #103, refreshed PR #119; Codespaces `github-cli` + `docker-in-docker` features PR #120
 - [x] Dev Container `image` pinned by digest (`name:<tag>@sha256:<digest>`; not a floating tag) — PR #115
 
 ## 3. Dependencies (pnpm)
