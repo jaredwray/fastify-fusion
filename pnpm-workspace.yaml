@@ -15,3 +15,5 @@ overrides:
 allowBuilds:
   "@swc/core": true
   esbuild: true
+  # wrangler (Pages deploy) postinstall downloads the workerd binary
+  workerd: true

@@ -20,7 +20,7 @@ Profile: npm library · public
 - [x] `packageManager: pnpm@11.3+` pinned in `package.json` — verified `pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457`
 - [x] 7-day cooldown: `minimumReleaseAge: 10080`, `minimumReleaseAgeStrict: true`, `minimumReleaseAgeIgnoreMissingTime: false`; no first-party `minimumReleaseAgeExclude` — PR #104
 - [x] `trustPolicy: no-downgrade`; no first-party `trustPolicyExclude` — PR #104
-- [x] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline — PR #104 (third-party `allowBuilds` exceptions: `@swc/core`, esbuild)
+- [x] Lifecycle scripts blocked: `strictDepBuilds: true`, `dangerouslyAllowAllBuilds: false`, `allowBuilds: {}` baseline — PR #104 (third-party `allowBuilds` exceptions: `@swc/core`, esbuild; `workerd` for the `wrangler` Pages-deploy toolchain — PR #122)
 - [x] `blockExoticSubdeps: true` — PR #104
 - [x] Lockfile committed; CI installs with `pnpm install --frozen-lockfile` — PR #105
 - [x] No `.github/dependabot.yml`; other dependency-update tools (if any) open PRs only — never auto-merge — verified
