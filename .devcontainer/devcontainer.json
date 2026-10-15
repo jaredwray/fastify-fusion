@@ -1,6 +1,6 @@
 {
   "name": "Node.js",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:5.1.2-24-trixie@sha256:757b22963a35e3673da4bece29c4948c815637085947259b80910e951e3ba64a",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:5.2.2-24-trixie@sha256:c4ebf3c9a95bc0f39ee39a641fc7d518434df226b727e9d880dd7fe1ad0cc99b",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:4": {
