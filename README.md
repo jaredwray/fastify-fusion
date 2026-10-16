@@ -6,6 +6,7 @@
 [![npm](https://img.shields.io/npm/v/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
 [![npm](https://img.shields.io/npm/dm/fastify-fusion)](https://www.npmjs.com/package/fastify-fusion)
 [![license](https://img.shields.io/github/license/jaredwray/fastify-fusion)](https://github.com/jaredwray/fastify-fusion/blob/main/LICENSE)
+[![Drydock review](https://img.shields.io/endpoint?url=https%3A%2F%2Fdrydock.org%2Fpublic%2Fbadge%2Fnpm%2Ffastify-fusion)](https://drydock.org/diff/fastify-fusion)
 
 Fastify API framework with `best practices` and `plugins` fused together to make it easy to build and maintain your API.
 
