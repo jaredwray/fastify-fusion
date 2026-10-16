@@ -57,7 +57,7 @@
     "wrangler": "^4.149.0"
   },
   "peerDependencies": {
-    "fastify": "^5.3.2"
+    "fastify": "^5.12.5"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.1",
