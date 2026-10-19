@@ -8,9 +8,16 @@ trustPolicy: no-downgrade
 
 # Pin transitive versions that fail no-downgrade (later publish, weaker trust)
 # rather than excluding them.
+# Floor packages whose parents have no release that depends on the patched
+# version. postcss is bumped to 8.5.29, which requires source-map-js ^1.2.2;
+# magicast still allows 1.2.1, so that package is floored here too.
 overrides:
   chokidar: 5.0.0
   semver@5: 7.8.5
+  handlebars: ">=4.7.10"
+  source-map-js: ">=1.2.2"
+  # Keep the undici 8 line (docula already resolves 8.10.2). Only lift 7.x.
+  "undici@7": ">=7.29.1 <8"
 
 allowBuilds:
   "@swc/core": true
