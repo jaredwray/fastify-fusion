@@ -14,8 +14,13 @@ trustPolicy: no-downgrade
 # rather than excluding them.
 # Floor packages whose parents have no release that depends on the patched
 # version. Selectors and values stay on the current major so an older
-# major is not rewritten. postcss 8.5.29 requires source-map-js ^1.2.2;
+# major is not rewritten. postcss 8.5.31 requires source-map-js ^1.2.2;
 # magicast still allows 1.2.1, so that package is floored here too.
+# markdown-it is the exception: CVE-2026-111758 and CVE-2026-111759 are
+# fixed only on 15.0.2+, and fumanchu 4.7.2 still requests ^14. 15.0.3
+# was published 2026-10-16. vite 8.3.5 (CVE-2026-112942) was published
+# 2026-10-21. zod 4.6.7 (CVE-2023-54404) was published 2026-10-12.
+# All three are outside the 7-day minimumReleaseAge.
 overrides:
   chokidar: 5.0.0
   semver@5: 7.8.5
@@ -23,6 +28,9 @@ overrides:
   "source-map-js@1": ">=1.2.2 <2"
   "undici@7": ">=7.30.1 <8"
   "undici@8": ">=8.12.2 <9"
+  "vite@8": ">=8.3.5 <9"
+  "markdown-it": "15.0.3"
+  "zod@4": ">=4.6.7 <5"
 
 allowBuilds:
   "@swc/core": true
