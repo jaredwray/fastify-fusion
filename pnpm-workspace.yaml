@@ -17,6 +17,9 @@ trustPolicy: no-downgrade
 # was published 2026-10-16. vite 8.3.5 (CVE-2026-112942) was published
 # 2026-10-21. zod 4.6.7 (CVE-2023-54404) was published 2026-10-12.
 # All three are outside the 7-day minimumReleaseAge.
+# set-cookie-parser 2.7.2 has prototype pollution (AIKIDO-2026-269475).
+# light-my-request 6.6.0 requests ^2.6.0. No release requires 2.7.3.
+# 2.7.3 was published on 2026-10-23. That date is outside the 7-day age.
 overrides:
   chokidar: 5.0.0
   semver@5: 7.8.5
@@ -27,6 +30,7 @@ overrides:
   "vite@8": ">=8.3.5 <9"
   "markdown-it": "15.0.3"
   "zod@4": ">=4.6.7 <5"
+  "set-cookie-parser@<2.7.3": "2.7.3"
 
 allowBuilds:
   "@swc/core": true
